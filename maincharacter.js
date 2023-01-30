@@ -44,40 +44,6 @@ class MainCharacter extends Animator {
         }
     }
     update() {
-
-		// collision checks
-		// this.wasFalling = this.falling;
-        // if(this.canfall) this.falling = true; // assume falling until collision
-
-        // for(const entity of gameEngine.entities) { 
-        //     if(entity == this || entity.BB == undefined) continue; // entity does not have collision
-        //     if(this.lastBB.collision(entity.BB)) {
-        //         this.falling = false; // landed, clean up fall mechanics
-        //         this.fallStartTime = this.fallInitPosition = null;
-		// 		this.v_0 = 0;
-		// 		console.log("entity?" + entity.BB.location.y, entity.BB)
-        //         if(this.location.y < entity.BB.location.y)
-		// 		    this.location.y = entity.BB.y - this.height - 2;
-                
-		// 		this.updateBB();
-        //         console.log("collision detected", entity.constructor.name);
-        //         //break;
-        //     }
-        // }
-        // if(this.falling && this.fallStartTime == null) {
-        //     this.fallStartTime = new Date();
-        //     this.fallInitPosition = this.location;
-        // }
-		// // gravity-based constants:
-		// const t_h = 0.25;       // time to apex of "jump" in seconds.
-		// const h = 4;            // desired height of "jump"
-		// const g = 2 * h / (t_h ** 2); // acceleration due to gravity.
-		
-        // if (this.collision && this.canfall && this.falling) { // fall until collision
-        //     // are we already falling?
-        //     const t = (new Date() - this.fallStartTime) / 1000; // current air time(seconds)
-        //     this.location.y = 0.5 * g * t ** 2 + this.v_0 * t + this.fallInitPosition.y;
-        // }
         if (gameEngine.keys["d"]) { // moving right
             this.location.x += 2;
             this.mirrored = false;
@@ -92,29 +58,14 @@ class MainCharacter extends Animator {
             Gravitator.direction *= -1;
         }
         if (gameEngine.keys[" "]) { // initiate jump!
-            // if (this.jumpStart === undefined && this.jumpInitPosition === undefined) {
-            //     this.mode = "JUMP";
-            //     this.modeIndex = 0;
-                // this.jumpStart = new Date();
-                // this.jumpInitPosition = this.location;
-				// this.v_0 = -2*h/t_h;
                 if(this.mode != "JUMP" && !this.falling)
                     this.gravitator.jump();
-            //}
         }
         // not in the air, not walking
         else if (this.mode != "JUMP" && !(gameEngine.keys['a'] | gameEngine.keys['d'])) { 
             this.mode = "IDLE";
         }
         this.gravitator.nextPosition();
-        /*if (this.location.y > 600) { // bottom of map @ ctx size y=768
-            this.jumpInitPosition = this.jumpStart = undefined;
-        	
-            this.location.y = 600;
-            this.mode = "RUN";
-            this.modeIndex = 0;
-        }*/
-
         super.update();
     }
     draw() {
