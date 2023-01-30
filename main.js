@@ -31,7 +31,7 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.mainCharacter = new MainCharacter({
 			row: 2,
 			mode: "RUN",
-			location: { x: 0, y: 64*2 },
+			location: { x: 64*4, y: 64*2 },
 			scale: 2
 		});
 	
