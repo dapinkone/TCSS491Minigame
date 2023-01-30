@@ -16,10 +16,11 @@ class Block {
         this.id = 1000*x + y;
         this.gravitator = new Gravitator(this);
         this.updateBB();
+        this.updateBB();
     }
     updateBB() {
         if (this.collision) {
-            //this.lastBB = this.BB;
+            this.lastBB = this.BB;
             this.BB = new BoundingBox({
                 width: Block.blockwidth,
                 height: Block.blockwidth,
@@ -29,40 +30,11 @@ class Block {
         }
     }
     update() {
-        // this.animator.location = this.location;
-        // this.updateBB();
         this.gravitator.nextPosition();
         const MC = gameEngine.mainCharacter;
         if(this.heavy && this.BB.collision(MC.BB)) {
             
-        }
-        // if(this.canfall) this.falling = true; // assume falling until collision
-        // for(const entity of gameEngine.entities) { // collision checks
-        //     if(entity == this || !entity.BB ) continue; // entity does not have collision
-        //     if(entity.BB.collision(this.BB/*lastBB*/)) {
-        //         this.falling = false;
-        //         this.fallStartTime = null;
-        //         console.log("collision detected", entity.constructor.name, this.constructor.name);
-        //         if(this.location.y < entity.BB.location.y)
-        //             this.location.y = entity.BB.location.y - this.BB.height;
-        //         //break;
-        //     }
-        // }
-        // if(this.falling && this.fallStartTime == null) {
-        //     this.fallStartTime = new Date();
-        //     this.fallInitPosition = this.location;
-        // }
-        // if (this.collision && this.canfall && this.falling) { // fall until collision
-        //     // gravity-based constants:
-        //     const t_h = 0.25;       // time to apex of "jump" in seconds.
-        //     const h = 4;            // desired height of "jump"
-        //     const v_0 = 0;          // initial velocity in the y axis (blocks don't jump)
-        //     const g = 2 * h / (t_h ** 2); // acceleration due to gravity.
-        //     // are we already falling?
-        //     const t = (new Date() - this.fallStartTime) / 1000; // current air time(seconds)
-        //     this.location.y = 0.5 * g * t ** 2 + v_0 * t + this.fallInitPosition.y;
-        // }
-  
+        }  
     }
     draw() {
         this.animator.draw(gameEngine.ctx);
@@ -74,6 +46,6 @@ class VictoryBlock extends Block {
         super(432, 288, row*Block.blockwidth, col*Block.blockwidth, true, false, false);
     }
     onCollision() {
-        alert("Victory!");
+        console.log("Victory!");
     }
 }
