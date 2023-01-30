@@ -88,14 +88,14 @@ class MainCharacter extends Animator {
             this.mode = "IDLE";
         }
         if (gameEngine.keys[" "]) { // initiate jump!
-            if (this.jumpStart === undefined && this.jumpInitPosition === undefined) {
-                this.mode = "JUMP";
-                this.modeIndex = 0;
+            // if (this.jumpStart === undefined && this.jumpInitPosition === undefined) {
+            //     this.mode = "JUMP";
+            //     this.modeIndex = 0;
                 // this.jumpStart = new Date();
                 // this.jumpInitPosition = this.location;
 				// this.v_0 = -2*h/t_h;
                 this.gravitator.jump();
-            }
+            //}
         }
         this.gravitator.nextPosition();
         /*if (this.location.y > 600) { // bottom of map @ ctx size y=768
