@@ -20,10 +20,10 @@ class BoundingBox {
     //     return false;
     // }
     collision(other) {
-        return (this.right >= other.left // other is on the left?
-            && this.left <= other.right // other is on the right?
-            && this.top <= other.bottom // other is below
-            && this.bottom >= other.top); // other is above
+        return (this.right > other.left // other is on the left?
+            && this.left < other.right // other is on the right?
+            && this.top < other.bottom // other is below
+            && this.bottom > other.top); // other is above
     }
     contains(point) {
         return (
