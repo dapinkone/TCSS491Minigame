@@ -6,6 +6,7 @@ class Block {
             /* sWidth */ 16, /* sHeight */ 16, 
             /*animation length*/ 1, /* fps */ 1, /* scale */ 4);
         Object.assign(this, {sx, sy, location: {x, y}, collision, canfall});
+        this.id = 1000*x + y;
         this.gravitator = new Gravitator(this);
         this.updateBB();
     }

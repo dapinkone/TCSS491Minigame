@@ -41,6 +41,8 @@ class Gravitator {
             const t = (new Date() - client.fallStartTime) / 1000; // current air time(seconds)
             client.location.y = 0.5 * this.g * this.t ** 2 + this.v_0 * this.t + client.fallInitPosition.y;
         }
-        if(client.constructor.name == "MainCharacter") console.log(client.location);
+        if(client == gameEngine.example) {
+            console.log(client);
+        }
     }
 }

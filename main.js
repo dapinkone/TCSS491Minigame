@@ -29,14 +29,12 @@ ASSET_MANAGER.downloadAll(() => {
 	
 	gameEngine.init(ctx);
 	buildBackground(2*16, 0*16);	// NOTE: canvas is 64x48 blocks in dimension
-	gameEngine.example = new Block(0, 0, 0, 64*4, true, true);
-	gameEngine.addEntity(gameEngine.example);
+	gameEngine.addEntity(gameEngine.example = new Block(0, 0, 2*Block.blockwidth, 3*Block.blockwidth, true, true));
 	for(const col of Array(16).keys()) { // draw some ground
 		const row = 10;
-		gameEngine.addEntity(new Block(0, 0, col*Block.blockwidth, (row-3)*Block.blockwidth, true, false));
 		gameEngine.addEntity(new Block(8*16, 2*16, col*Block.blockwidth, row*Block.blockwidth, true, false));
 	}
-	gameEngine.addEntity(gameEngine.mainCharacter);
+	//gameEngine.addEntity(gameEngine.mainCharacter);
 	
 	gameEngine.start();
 });
