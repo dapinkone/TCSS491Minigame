@@ -25,7 +25,6 @@ class MainCharacter extends Animator {
     }
     onLanding() {
         this.mode = "WALK";
-        console.log("char: landed")
     }
     nextSpriteIndex() {
         const seq = this.modeSequences[this.mode];
@@ -89,7 +88,7 @@ class MainCharacter extends Animator {
             this.mirrored = true;
             this.mode = "WALK";
         }
-        if (gameEngine.keys['g']) {
+        if (gameEngine.keys['f']) {
             Gravitator.direction *= -1;
         }
         if (gameEngine.keys[" "]) { // initiate jump!

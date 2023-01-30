@@ -53,7 +53,6 @@ class Gravitator {
              //   console.log("collision detected", entity.constructor.name, c.constructor.name);
                 if(c.location.y < entity.BB.location.y) {// bounce back, preventing BB overlap.
                     c.location.y = entity.BB.location.y - c.BB.height - 1;
-                    console.log(hit);
                 } else {
                     c.location.y = entity.BB.location.y + c.BB.height + 1;
                 }
@@ -62,7 +61,7 @@ class Gravitator {
                 if (entity.onCollision !== undefined) {
                     entity.onCollision(c);
                 }
-                break;
+             //   break;
             }
         }
         if (c.falling && c.fallStartTime == null) {

@@ -44,7 +44,7 @@ ASSET_MANAGER.downloadAll(() => {
 	runOfBlocks(8*16,2*16, 11, 0, 16, true, true, false, false);
 	runOfBlocks(8*16,2*16, 0, 0, 12, false, true, false, false);
 	runOfBlocks(8*16,2*16, 0, 15, 12, false, true, false, false);
-	gameEngine.addEntity(new Block(432, 288, 14*Block.blockwidth, 2*Block.blockwidth, true, false, false)); // victory present?
+	gameEngine.addEntity(new VictoryBlock(14, 2)); // victory present?
 	gameEngine.addEntity(gameEngine.mainCharacter);
 	
 	gameEngine.start();
