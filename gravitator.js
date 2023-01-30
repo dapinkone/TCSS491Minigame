@@ -2,7 +2,10 @@ class Gravitator {
     // class to handle the effects of gravity on a client entity.
 
     static direction = 1;
+    static timeOfDirectionChange = 0;
     static changeDirection = () => {
+        if(gameEngine.timer.gameTime - this.timeOfDirectionChange < 1) return; // too soon.
+        this.timeOfDirectionChange = gameEngine.timer.gameTime;
         Gravitator.direction *= -1;
         for (const entity of gameEngine.entities) {
             const now = new Date();
@@ -50,10 +53,10 @@ class Gravitator {
                 c.fallInitPosition = null;
                 this.v_0 = 0;
                 
-                if(c.location.y <= entity.BB.location.y) {// bounce back, preventing BB overlap.
-                    c.location.y = entity.BB.location.y - c.BB.height - 1;
+                if(c.lastBB.bottom <= entity.BB.top) {// bounce back, preventing BB overlap.
+                    c.location.y = entity.BB.top - c.BB.height;
                 } else {
-                    c.location.y = entity.BB.location.y + c.BB.height + 1;
+                    c.location.y = entity.BB.top + c.BB.height;
                 }
                 if(this.onLanding !== undefined) 
                     this.onLanding();

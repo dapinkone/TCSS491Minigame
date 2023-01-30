@@ -55,7 +55,7 @@ class MainCharacter extends Animator {
             this.mode = "WALK";
         }
         if (gameEngine.keys['f']) {
-            Gravitator.direction *= -1;
+            Gravitator.changeDirection();
         }
         if (gameEngine.keys[" "]) { // initiate jump!
                 if(this.mode != "JUMP" && !this.falling)
