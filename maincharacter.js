@@ -15,10 +15,12 @@ class MainCharacter extends Animator {
         super("assets/characters.png", 5, (32 * row), 32, 32, 4, fps, scale);
         Object.assign(this, { location, mode, row });
         console.log(this, this.location);
-        this.updateBB();
+        
         this.collision = true;
         this.canfall = true;
         this.animator = this;
+        this.updateBB();
+        this.updateBB();
         this.gravitator = new Gravitator(this, this.onLanding);
     }
     onLanding() {
@@ -33,6 +35,7 @@ class MainCharacter extends Animator {
 
 	updateBB() {
         if (this.collision) {
+            this.lastBB = this.BB;
             this.BB = new BoundingBox({
                 width: this.width,
                 height: this.height,
@@ -42,7 +45,6 @@ class MainCharacter extends Animator {
         }
     }
     update() {
-		this.updateBB();
 
 		// collision checks
 		// this.wasFalling = this.falling;
@@ -86,7 +88,10 @@ class MainCharacter extends Animator {
             this.location.x -= 2;
             this.mirrored = true;
             this.mode = "WALK";
-        } 
+        }
+        if (gameEngine.keys['g']) {
+            Gravitator.direction *= -1;
+        }
         if (gameEngine.keys[" "]) { // initiate jump!
             // if (this.jumpStart === undefined && this.jumpInitPosition === undefined) {
             //     this.mode = "JUMP";
