@@ -8,13 +8,21 @@ const buildBackground = (sx, sy) => {
 	const ctx = gameEngine.ctx;
 	//ctx.save();
 	//ctx.globalAlpha = 0.1; // 50% opacity to dim out blocks?
-	
-	for(const col of Array(16).keys()) {
-		for(const row of Array(12).keys()) {
-			gameEngine.addEntity(new Block(sx, sy, col*Block.blockwidth, row*Block.blockwidth));
-		}
+	for(const row of Array(12).keys()) {
+		runOfBlocks(sx, sy, row, 0, 16);
 	}
 	ctx.restore();
+}
+const runOfBlocks = (sx, sy, row, col, runLength, horizontal=true, collision = false, canfall=false, heavy = false) => {
+	for(const i of Array(runLength).keys()) { // draw some ground
+		const colModifier = horizontal ? i : 0;
+		const rowModifier = horizontal ? 0 : i;
+		gameEngine.addEntity(new Block(
+			sx, sy,
+			(col + colModifier) * Block.blockwidth,
+			(row + rowModifier) *Block.blockwidth,
+			collision, canfall, heavy)); // top row
+	}
 }
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
@@ -31,14 +39,10 @@ ASSET_MANAGER.downloadAll(() => {
 	buildBackground(2*16, 0*16);	// NOTE: canvas is 16x12 blocks in dimension
 	gameEngine.addEntity(gameEngine.example = new Block(0, 0, 2*Block.blockwidth, 3*Block.blockwidth, true, true));
 	// building a frame around the sides:
-	for(const col of Array(16).keys()) { // draw some ground
-		gameEngine.addEntity(new Block(8*16, 2*16, col*Block.blockwidth, 0*Block.blockwidth, true, false)); // top row
-		gameEngine.addEntity(new Block(8*16, 2*16, col*Block.blockwidth, 11*Block.blockwidth, true, false)); // bottom row
-	}
-	for(const row of Array(10).keys()) {
-		gameEngine.addEntity(new Block(8*16, 2*16, 0*Block.blockwidth, (row+1)*Block.blockwidth, true, false)); // left col
-		gameEngine.addEntity(new Block(8*16, 2*16, 15*Block.blockwidth, (row+1)*Block.blockwidth, true, false)); // right col
-	}
+	runOfBlocks(8*16,2*16, 0, 0, 16, true, true, false, false);
+	runOfBlocks(8*16,2*16, 11, 0, 16, true, true, false, false);
+	runOfBlocks(8*16,2*16, 0, 0, 12, false, true, false, false);
+	runOfBlocks(8*16,2*16, 0, 15, 12, false, true, false, false);
 	gameEngine.addEntity(gameEngine.mainCharacter);
 	
 	gameEngine.start();
