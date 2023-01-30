@@ -19,7 +19,7 @@ class MainCharacter extends Animator {
         this.collision = true;
         this.canfall = true;
         this.animator = this;
-        this.gravitator = new Gravitator(this);
+        this.gravitator = new Gravitator(this, this.onLanding);
     }
     onLanding() {
         this.mode = "WALK";
@@ -80,22 +80,28 @@ class MainCharacter extends Animator {
         if (gameEngine.keys["d"]) { // moving right
             this.location.x += 2;
             this.mirrored = false;
+            this.mode = "WALK";
         }
-         if (gameEngine.keys["a"]) { // moving left
+        else if (gameEngine.keys["a"]) { // moving left
             this.location.x -= 2;
             this.mirrored = true;
-        }  if (this.mode != "JUMP") { // not in the air, not walking
-            this.mode = "IDLE";
-        }
-        if (gameEngine.keys[" "]) { // initiate jump!
+            this.mode = "WALK";
+        } 
+
+        
+        else if (gameEngine.keys[" "]) { // initiate jump!
             // if (this.jumpStart === undefined && this.jumpInitPosition === undefined) {
             //     this.mode = "JUMP";
             //     this.modeIndex = 0;
                 // this.jumpStart = new Date();
                 // this.jumpInitPosition = this.location;
 				// this.v_0 = -2*h/t_h;
-                this.gravitator.jump();
+                if(this.mode != "JUMP")
+                    this.gravitator.jump();
             //}
+        }
+        else if (this.mode != "JUMP") { // not in the air, not walking
+            this.mode = "IDLE";
         }
         this.gravitator.nextPosition();
         /*if (this.location.y > 600) { // bottom of map @ ctx size y=768
