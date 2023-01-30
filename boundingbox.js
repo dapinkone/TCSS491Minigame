@@ -6,11 +6,11 @@ class BoundingBox {
         if (other == undefined) return false
         // check if any of the 4 corners exist within the other shape
         if (!other.getCorners) console.log("unknown collision type: ", other.constructor.name)
-        const corners = other.getCorners();
+        const corners = this.getCorners();
         for (const point of Object.keys(corners)) {
-            if (this.contains(corners[point])) {
+            if (other.contains(corners[point])) {
                 //console.log("collision ", other.constructor.name, point);
-                return true;
+                return true;//point; // conveniently, most strings evalutate to true.
             }
         }
         return false;
