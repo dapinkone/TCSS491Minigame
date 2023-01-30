@@ -6,8 +6,12 @@ class BoundingBox {
         if (other == undefined) return false
         // check if any of the 4 corners exist within the other shape
         if (!other.getCorners) console.log("unknown collision type: ", other.constructor.name)
-        for (const point of other.getCorners()) {
-            if (this.contains(point)) return true;
+        const corners = other.getCorners();
+        for (const point of Object.keys(corners)) {
+            if (this.contains(corners[point])) {
+                //console.log("collision ", other.constructor.name, point);
+                return true;
+            }
         }
         return false;
     }
@@ -18,12 +22,12 @@ class BoundingBox {
     }
     getCorners() {
         // returns coordinates of the 4 corners of the bounding box
-        return [
-            this.location,                                                       // topleft
-            { x: this.location.x + this.width, y: this.location.y },             // topright
-            { x: this.location.x, y: this.location.y + this.height },            // bottomleft
-            { x: this.location.x + this.width, y: this.location.y + this.height } // bottomright
-        ];
+        return {
+            topleft:this.location,                                                       // topleft
+            topright:{ x: this.location.x + this.width, y: this.location.y },             // topright
+            bottomleft:{ x: this.location.x, y: this.location.y + this.height },            // bottomleft
+            bottomright:{ x: this.location.x + this.width, y: this.location.y + this.height } // bottomright
+        };
     }
     updateLocation(location) {
         this.location = location;

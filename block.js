@@ -1,6 +1,6 @@
 class Block {
     static blockwidth = 16*4;
-    constructor(sx, sy, x, y, collision = false, canfall=false) {
+    constructor(sx, sy, x, y, collision = false, canfall=false, heavy = false) {
         this.animator = new Animator("./assets/Environmental_Blocks.png",
             /* sx */ sx, /* sy */ sy,
             /* sWidth */ 16, /* sHeight */ 16, 
@@ -11,6 +11,7 @@ class Block {
         this.location = {x, y};
         this.collision = collision;
         this.canfall = canfall;
+        this.heavy = heavy;   // can the block be moved/pushed from the side?
     
         this.id = 1000*x + y;
         this.gravitator = new Gravitator(this);
@@ -31,6 +32,10 @@ class Block {
         // this.animator.location = this.location;
         // this.updateBB();
         this.gravitator.nextPosition();
+        const MC = gameEngine.mainCharacter;
+        if(this.heavy && this.BB.collision(MC.BB)) {
+            
+        }
         // if(this.canfall) this.falling = true; // assume falling until collision
         // for(const entity of gameEngine.entities) { // collision checks
         //     if(entity == this || !entity.BB ) continue; // entity does not have collision

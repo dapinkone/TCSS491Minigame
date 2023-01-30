@@ -87,16 +87,14 @@ class MainCharacter extends Animator {
             this.mirrored = true;
             this.mode = "WALK";
         } 
-
-        
-        else if (gameEngine.keys[" "]) { // initiate jump!
+        if (gameEngine.keys[" "]) { // initiate jump!
             // if (this.jumpStart === undefined && this.jumpInitPosition === undefined) {
             //     this.mode = "JUMP";
             //     this.modeIndex = 0;
                 // this.jumpStart = new Date();
                 // this.jumpInitPosition = this.location;
 				// this.v_0 = -2*h/t_h;
-                if(this.mode != "JUMP")
+                if(this.mode != "JUMP" && !this.falling)
                     this.gravitator.jump();
             //}
         }
