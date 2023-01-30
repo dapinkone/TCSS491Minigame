@@ -38,11 +38,13 @@ ASSET_MANAGER.downloadAll(() => {
 	gameEngine.init(ctx);
 	buildBackground(2*16, 0*16);	// NOTE: canvas is 16x12 blocks in dimension
 	gameEngine.addEntity(gameEngine.example = new Block(0, 0, 2*Block.blockwidth, 3*Block.blockwidth, true, true));
+	
 	// building a frame around the sides:
 	runOfBlocks(8*16,2*16, 0, 0, 16, true, true, false, false);
 	runOfBlocks(8*16,2*16, 11, 0, 16, true, true, false, false);
 	runOfBlocks(8*16,2*16, 0, 0, 12, false, true, false, false);
 	runOfBlocks(8*16,2*16, 0, 15, 12, false, true, false, false);
+	gameEngine.addEntity(new Block(432, 288, 14*Block.blockwidth, 2*Block.blockwidth, true, false, false)); // victory present?
 	gameEngine.addEntity(gameEngine.mainCharacter);
 	
 	gameEngine.start();

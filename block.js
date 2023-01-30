@@ -69,3 +69,11 @@ class Block {
         if (this.collision) this.BB.draw();
     }
 }
+class VictoryBlock extends Block {
+    constructor(row, col) {
+        super(432, 288, row*Block.blockwidth, col*Block.blockwidth, true, false, false);
+    }
+    onCollision() {
+        alert("Victory!");
+    }
+}
