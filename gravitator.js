@@ -8,16 +8,15 @@ class Gravitator {
         this.onLanding = onLanding; // function to run when we land(change to walk mode or whatever)       
         // gravity-based constants:
         this.t_h = 0.25;       // time to apex of "jump" in seconds.
-        this.h = 4;            // desired height of "jump"
+        this.h = 6;            // desired height of "jump"
         this.g = 2 * this.h / (this.t_h ** 2); // acceleration due to gravity.
-        
     }
     jump() {
         let c = this.client;
         this.v_0 = -2 * this.h / this.t_h;
         c.fallInitPosition = c.location;
         c.fallStartTime = new Date();
-        console.log([this.v_0]);
+        //console.log([this.v_0]);
     }
     nextPosition() {
         const c = this.client;
@@ -32,13 +31,16 @@ class Gravitator {
         for(const entity of gameEngine.entities) { // collision checks
             if(entity == c || !entity.BB ) continue; // entity does not have collision
             if(entity.BB.collision(c.BB) && c.wasFalling) {
+                // have landed, clean up data from fall
                 c.falling = false;
                 c.fallStartTime = null;
                 c.fallInitPosition = null;
+                this.v_0 = 0;
+
                 console.log("collision detected", entity.constructor.name, c.constructor.name);
                 if(c.location.y < entity.BB.location.y) // bounce back, preventing BB overlap.
-                    c.location.y = entity.BB.location.y - c.BB.height;
-                if(this.onLanding) this.onLanding();
+                    c.location.y = entity.BB.location.y - c.BB.height - 2;
+                if(this.onLanding !== undefined) this.onLanding();
                 break;
             }
         }
@@ -49,7 +51,7 @@ class Gravitator {
         if (c.collision && c.canfall && c.falling) { // fall until collision
             // are we already falling?
             const t = (new Date() - c.fallStartTime) / 1000; // current air time(seconds)
-            c.location.y = 0.5 * this.g * t ** 2 + this.v_0 * t + c.fallInitPosition.y;
+            c.location.y = Math.floor(0.5 * this.g * t ** 2 + this.v_0 * t + c.fallInitPosition.y);
         }
     }
 }

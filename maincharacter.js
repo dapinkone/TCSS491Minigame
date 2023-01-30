@@ -18,12 +18,12 @@ class MainCharacter extends Animator {
         this.updateBB();
         this.collision = true;
         this.canfall = true;
-		//this.v_0 = 0;
         this.animator = this;
         this.gravitator = new Gravitator(this);
     }
     onLanding() {
         this.mode = "WALK";
+        console.log("char: landed")
     }
     nextSpriteIndex() {
         const seq = this.modeSequences[this.mode];
@@ -33,7 +33,6 @@ class MainCharacter extends Animator {
 
 	updateBB() {
         if (this.collision) {
-            this.lastBB =
             this.BB = new BoundingBox({
                 width: this.width,
                 height: this.height,
@@ -82,10 +81,10 @@ class MainCharacter extends Animator {
             this.location.x += 2;
             this.mirrored = false;
         }
-        else if (gameEngine.keys["a"]) { // moving left
+         if (gameEngine.keys["a"]) { // moving left
             this.location.x -= 2;
             this.mirrored = true;
-        } else if (this.mode != "JUMP") { // not in the air, not walking
+        }  if (this.mode != "JUMP") { // not in the air, not walking
             this.mode = "IDLE";
         }
         if (gameEngine.keys[" "]) { // initiate jump!
