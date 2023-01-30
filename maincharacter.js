@@ -98,7 +98,8 @@ class MainCharacter extends Animator {
                     this.gravitator.jump();
             //}
         }
-        else if (this.mode != "JUMP") { // not in the air, not walking
+        // not in the air, not walking
+        else if (this.mode != "JUMP" && !(gameEngine.keys['a'] | gameEngine.keys['d'])) { 
             this.mode = "IDLE";
         }
         this.gravitator.nextPosition();
