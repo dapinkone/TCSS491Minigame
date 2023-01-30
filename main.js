@@ -34,7 +34,7 @@ ASSET_MANAGER.downloadAll(() => {
 		const row = 10;
 		gameEngine.addEntity(new Block(8*16, 2*16, col*Block.blockwidth, row*Block.blockwidth, true, false));
 	}
-	//gameEngine.addEntity(gameEngine.mainCharacter);
+	gameEngine.addEntity(gameEngine.mainCharacter);
 	
 	gameEngine.start();
 });

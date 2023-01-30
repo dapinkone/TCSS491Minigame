@@ -5,7 +5,13 @@ class Block {
             /* sx */ sx, /* sy */ sy,
             /* sWidth */ 16, /* sHeight */ 16, 
             /*animation length*/ 1, /* fps */ 1, /* scale */ 4);
-        Object.assign(this, {sx, sy, location: {x, y}, collision, canfall});
+        //Object.assign(this, {sx, sy, location: {x, y}, collision, canfall});
+        this.sx = sx;
+        this.sy = sy;
+        this.location = {x, y};
+        this.collision = collision;
+        this.canfall = canfall;
+    
         this.id = 1000*x + y;
         this.gravitator = new Gravitator(this);
         this.updateBB();
@@ -22,8 +28,8 @@ class Block {
         }
     }
     update() {
-        this.animator.location = this.location;
-        this.updateBB();
+        // this.animator.location = this.location;
+        // this.updateBB();
         this.gravitator.nextPosition();
         // if(this.canfall) this.falling = true; // assume falling until collision
         // for(const entity of gameEngine.entities) { // collision checks
@@ -51,13 +57,7 @@ class Block {
         //     const t = (new Date() - this.fallStartTime) / 1000; // current air time(seconds)
         //     this.location.y = 0.5 * g * t ** 2 + v_0 * t + this.fallInitPosition.y;
         // }
-
-
-        if(this.location.y > 900) {
-            this.location.y = 0;
-        }
-
-   
+  
     }
     draw() {
         this.animator.draw(gameEngine.ctx);

@@ -2,47 +2,54 @@ class Gravitator {
     // class to handle the effects of gravity on a client entity.
 
 
-    constructor(client) {
+    constructor(client, onLanding) {
         this.client = client;
         this.v_0 = 0;// initial velocity in the y axis (blocks don't jump)
-
+        this.onLanding = onLanding; // function to run when we land(change to walk mode or whatever)       
         // gravity-based constants:
         this.t_h = 0.25;       // time to apex of "jump" in seconds.
-        this.h = 4;            // desired height of "jump"    
+        this.h = 4;            // desired height of "jump"
         this.g = 2 * this.h / (this.t_h ** 2); // acceleration due to gravity.
-
+        
     }
     jump() {
+        let c = this.client;
         this.v_0 = -2 * this.h / this.t_h;
-        this.client.fallInitPosition = client.location;
-        this.client.fallStartTime = new Date();
+        c.fallInitPosition = c.location;
+        c.fallStartTime = new Date();
+        console.log([this.v_0]);
     }
     nextPosition() {
-        const client = this.client;
+        const c = this.client;
+        c.animator.location = c.location;
+        c.updateBB();
 
-        if (client.canfall) client.falling = true; // assume falling until collision
-        for (const entity of gameEngine.entities) { // collision checks
-            if (entity == client || !entity.BB) continue; // entity does not have collision
+        if(!c.canfall) { return;} // if the client doesn't fall, it's not really moving.
 
-            if (entity.BB.collision(client.BB)) { // landed
-                client.falling = false;
-                client.fallStartTime = null;
-                // bounce back from inside other box
-                if (client.location.y < entity.BB.location.y)
-                    client.location.y = entity.BB.location.y - client.BB.height;
-                this.v_0 = 0;
+        c.wasFalling = c.falling;   // need to remember if we were on the ground before.
+        c.falling = true;           // assume falling until collision
+        
+        for(const entity of gameEngine.entities) { // collision checks
+            if(entity == c || !entity.BB ) continue; // entity does not have collision
+            if(entity.BB.collision(c.BB) && c.wasFalling) {
+                c.falling = false;
+                c.fallStartTime = null;
+                c.fallInitPosition = null;
+                console.log("collision detected", entity.constructor.name, c.constructor.name);
+                if(c.location.y < entity.BB.location.y) // bounce back, preventing BB overlap.
+                    c.location.y = entity.BB.location.y - c.BB.height;
+                if(this.onLanding) this.onLanding();
+                break;
             }
         }
-        if (client.falling && client.fallStartTime == null) {
-            client.fallStartTime = new Date();
-            client.fallInitPosition = client.location;
+        if(c.falling && c.fallStartTime == null) {
+            c.fallStartTime = new Date();
+            c.fallInitPosition = c.location;
         }
-        if (client.collision && client.canfall && client.falling) { // fall until collision
-            const t = (new Date() - client.fallStartTime) / 1000; // current air time(seconds)
-            client.location.y = 0.5 * this.g * this.t ** 2 + this.v_0 * this.t + client.fallInitPosition.y;
-        }
-        if(client == gameEngine.example) {
-            console.log(client);
+        if (c.collision && c.canfall && c.falling) { // fall until collision
+            // are we already falling?
+            const t = (new Date() - c.fallStartTime) / 1000; // current air time(seconds)
+            c.location.y = 0.5 * this.g * t ** 2 + this.v_0 * t + c.fallInitPosition.y;
         }
     }
 }

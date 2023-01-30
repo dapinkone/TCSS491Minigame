@@ -7,10 +7,11 @@ class MainCharacter extends Animator {
         "HIT": [8, 9, 8],
         "SLASH": [10, 11, 12],
         "PUNCH": [11, 13, 11],
-        "RUN": [14, 15, 14, 17]
+        "RUN": [14, 15, 14, 17],
+        "IDLE": [0],
     };
 
-    constructor({ row = 0, mode = "RUN", fps = 5, scale = 1, location = { x: 0, y: 0 } }) {
+    constructor({ row = 0, mode = "WALK", fps = 5, scale = 1, location = { x: 0, y: 0 } }) {
         super("assets/characters.png", 5, (32 * row), 32, 32, 4, fps, scale);
         Object.assign(this, { location, mode, row });
         console.log(this, this.location);
@@ -18,9 +19,12 @@ class MainCharacter extends Animator {
         this.collision = true;
         this.canfall = true;
 		//this.v_0 = 0;
+        this.animator = this;
         this.gravitator = new Gravitator(this);
     }
-
+    onLanding() {
+        this.mode = "WALK";
+    }
     nextSpriteIndex() {
         const seq = this.modeSequences[this.mode];
         this.modeIndex = (this.modeIndex + 1) % seq.length;
@@ -40,7 +44,7 @@ class MainCharacter extends Animator {
     }
     update() {
 		this.updateBB();
-        this.gravitator.nextPosition();
+
 		// collision checks
 		// this.wasFalling = this.falling;
         // if(this.canfall) this.falling = true; // assume falling until collision
@@ -78,9 +82,11 @@ class MainCharacter extends Animator {
             this.location.x += 2;
             this.mirrored = false;
         }
-        if (gameEngine.keys["a"]) { // moving left
+        else if (gameEngine.keys["a"]) { // moving left
             this.location.x -= 2;
             this.mirrored = true;
+        } else if (this.mode != "JUMP") { // not in the air, not walking
+            this.mode = "IDLE";
         }
         if (gameEngine.keys[" "]) { // initiate jump!
             if (this.jumpStart === undefined && this.jumpInitPosition === undefined) {
@@ -92,6 +98,7 @@ class MainCharacter extends Animator {
                 this.gravitator.jump();
             }
         }
+        this.gravitator.nextPosition();
         /*if (this.location.y > 600) { // bottom of map @ ctx size y=768
             this.jumpInitPosition = this.jumpStart = undefined;
         	
