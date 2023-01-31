@@ -45,12 +45,12 @@ class MainCharacter extends Animator {
     }
     update() {
         if (gameEngine.keys["d"]) { // moving right
-            this.location.x += 2;
+            this.location.x += 4;
             this.mirrored = false;
             this.mode = "WALK";
         }
         else if (gameEngine.keys["a"]) { // moving left
-            this.location.x -= 2;
+            this.location.x -= 4;
             this.mirrored = true;
             this.mode = "WALK";
         }
