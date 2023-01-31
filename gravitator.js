@@ -47,8 +47,8 @@ class Gravitator {
             if (entity == c || !entity.BB) continue; // entity does not have collision
 
             const hits = c.BB.collisionSide(entity.BB);
-            if (entity.constructor.name != c.constructor.name)
-                console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
+            //if (entity.constructor.name != c.constructor.name)
+                //console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
             const collides = c.BB.collision(entity.BB);
             if (collides && c.wasFalling && c.falling) {
                 // have landed, clean up data from fall

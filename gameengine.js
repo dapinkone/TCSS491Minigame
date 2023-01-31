@@ -79,7 +79,9 @@ class GameEngine {
     addEntity(entity) {
         this.entities.push(entity);
     };
-
+    clearEntities() {
+        gameEngine.entities.forEach(e => e.removeFromWorld = true);
+    }
     draw() {
         const ctx = this.ctx;
         // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))

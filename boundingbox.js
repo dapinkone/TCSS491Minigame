@@ -25,6 +25,16 @@ class BoundingBox {
             && this.top < other.bottom // other is below
             && this.bottom > other.top); // other is above
     }
+    collisionSide(other) {
+        let sides = new Set();
+        if(this.top < other.bottom) sides.add("bottom"); // other is below
+        else if(this.bottom > other.top) sides.add("top"); // other is above
+        
+        if(this.right > other.left) sides.add("left"); // other is on the left?
+        else if(this.left < other.right) sides.add("right"); // other is on the right?
+
+        return sides;
+    }
     contains(point) {
         return (
             (this.location.y <= point.y && point.y <= this.location.y + this.height) && // y in bounds
