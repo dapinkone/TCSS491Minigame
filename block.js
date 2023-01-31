@@ -46,6 +46,9 @@ class VictoryBlock extends Block {
         super(432, 288, row*Block.blockwidth, col*Block.blockwidth, true, false, false);
     }
     onCollision() {
-        console.log("Victory!");
+        levels.current++;
+        gameEngine.mainCharacter.location = {x:0,y:0};
+        console.log("Victory! loading level " + levels.current);
+        loadLevel(levels.current);
     }
 }

@@ -15,6 +15,6 @@ ASSET_MANAGER.downloadAll(() => {
 	loadLevel(0);
 
 	//gameEngine.addEntity(new VictoryBlock(14, 2)); // victory present?
-	gameEngine.addEntity(gameEngine.mainCharacter);
+	//gameEngine.addEntity(gameEngine.mainCharacter);
 	gameEngine.start();
 });

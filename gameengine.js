@@ -81,6 +81,7 @@ class GameEngine {
     };
     clearEntities() {
         gameEngine.entities.forEach(e => e.removeFromWorld = true);
+        this.clean();
     }
     draw() {
         const ctx = this.ctx;
@@ -94,14 +95,16 @@ class GameEngine {
             entity.draw(this.ctx);
         }
     };
-
+    clean() {
+        this.entities = this.entities.filter(entity => !entity.removeFromWorld);
+    }
     update() {
         for(const entity of this.entities) {
             if (!entity.removeFromWorld) {
                 entity.update();
             }
         }
-        this.entities = this.entities.filter(entity => !entity.removeFromWorld);
+        this.clean();
     };
 
     loop() {

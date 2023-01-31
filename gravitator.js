@@ -64,7 +64,7 @@ class Gravitator {
                 else if (c.lastBB.top >= entity.BB.bottom) { // client below last tick.
                     c.location.y = entity.BB.top + c.BB.height;
                 }
-                else if (collides && c.lastBB.right <= entity.BB.left) {// client was left last tick.
+                else if (c.lastBB.right <= entity.BB.left) {// client was left last tick.
                     c.location.x = entity.BB.left - c.BB.width;
                 }
                 else if (c.lastBB.left >= entity.BB.right) { // client was right last tick.
@@ -78,6 +78,9 @@ class Gravitator {
 
             if (collides && c.onCollision !== undefined) {
                 c.onCollision(entity);
+            }
+            if (collides && entity.onCollision !== undefined) {
+                entity.onCollision(c);
             }
         }
         if (c.falling && c.fallStartTime == null) {
