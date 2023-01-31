@@ -49,28 +49,35 @@ class Gravitator {
             const hits = c.BB.collisionSide(entity.BB);
             if (entity.constructor.name != c.constructor.name)
                 console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
-            
-            if (c.BB.collision(entity.BB) && c.wasFalling && c.falling) {
+            const collides = c.BB.collision(entity.BB);
+            if (collides && c.wasFalling && c.falling) {
                 // have landed, clean up data from fall
                 c.falling = false;
                 c.fallStartTime = null;
                 c.fallInitPosition = null;
                 this.v_0 = 0;
-                
+
                 // bounce back, preventing overlap of boxes:
-                if(c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
+                if (c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
                     c.location.y = entity.BB.top - c.BB.height;
                 }
-                if(c.lastBB.top >= entity.BB.bottom) { // client below last tick.
+                else if (c.lastBB.top >= entity.BB.bottom) { // client below last tick.
                     c.location.y = entity.BB.top + c.BB.height;
                 }
-
+                else if (collides && c.lastBB.right <= entity.BB.left) {// client was left last tick.
+                    c.location.x = entity.BB.left - c.BB.width;
+                }
+                else if (c.lastBB.left >= entity.BB.right) { // client was right last tick.
+                    c.location.x = entity.BB.right + 1;
+                }
                 if (this.onLanding !== undefined)
                     this.onLanding();
-                if (entity.onCollision !== undefined) {
-                    entity.onCollision(c);
-                }
-             //   break;
+
+                //   break;
+            }
+
+            if (collides && c.onCollision !== undefined) {
+                c.onCollision(entity);
             }
         }
         if (c.falling && c.fallStartTime == null) {
