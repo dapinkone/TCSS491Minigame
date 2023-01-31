@@ -45,10 +45,12 @@ class VictoryBlock extends Block {
     constructor(row, col) {
         super(432, 288, row*Block.blockwidth, col*Block.blockwidth, true, false, false);
     }
-    onCollision() {
-        levels.current++;
-        gameEngine.mainCharacter.location = {x:0,y:0};
-        console.log("Victory! loading level " + levels.current);
-        loadLevel(levels.current);
+    onCollision(entity) {
+        // if we touch the box, move to the next level
+        if(entity instanceof MainCharacter) {
+            levels.current++;
+            console.log("Victory! loading level " + levels.current);
+            loadLevel(levels.current);
+        }
     }
 }
