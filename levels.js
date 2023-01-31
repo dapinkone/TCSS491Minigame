@@ -72,7 +72,7 @@ const levels = {
     2: {
         background: [6, 0],
         blocks: [
-            ...frame(0, 3),
+            ...frame(8, 2),
             [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
         ],
         victory: [11, 8],
@@ -81,7 +81,7 @@ const levels = {
     3: {
         background: [5, 0],
         blocks: [
-            ...frame(0, 3),
+            ...frame(8, 2),
             [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
         ],
         victory: [10, 10],
@@ -90,7 +90,7 @@ const levels = {
     4: {
         background: [4, 0],
         blocks: [
-            ...frame(0, 3),
+            ...frame(8, 2),
             [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
         ],
         victory: [10, 10],
@@ -99,7 +99,16 @@ const levels = {
     5: {
         background: [3, 0],
         blocks: [
-            ...frame(0, 3),
+            ...frame(8, 2),
+            [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
+        ],
+        victory: [10, 10],
+        entryPoint: { x: 64*4, y: 64 * 2}      
+    },
+    6: {
+        background: [30, 2],
+        blocks: [
+            ...frame(8, 2),
             [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
         ],
         victory: [10, 10],
