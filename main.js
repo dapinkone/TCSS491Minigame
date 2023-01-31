@@ -34,7 +34,7 @@ ASSET_MANAGER.downloadAll(() => {
 			location: { x: 64*4, y: 64*2 },
 			scale: 2
 		});
-	
+	document.getElementById('loc').textContent=document.URL;
 	gameEngine.init(ctx);
 	buildBackground(2*16, 0*16);	// NOTE: canvas is 16x12 blocks in dimension
 	gameEngine.addEntity(gameEngine.example = new Block(0, 0, 2*Block.blockwidth, 3*Block.blockwidth, true, true));
@@ -49,6 +49,5 @@ ASSET_MANAGER.downloadAll(() => {
 	runOfBlocks(0, 0, 3, 11, 3, true, true, true, false)
 	gameEngine.addEntity(new VictoryBlock(14, 2)); // victory present?
 	gameEngine.addEntity(gameEngine.mainCharacter);
-	
 	gameEngine.start();
 });
