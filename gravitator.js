@@ -4,7 +4,7 @@ class Gravitator {
     static direction = 1;
     static timeOfDirectionChange = 0;
     static changeDirection = () => {
-        if(gameEngine.timer.gameTime - this.timeOfDirectionChange < 1) return; // too soon.
+        if (gameEngine.timer.gameTime - this.timeOfDirectionChange < 1) return; // too soon.
         this.timeOfDirectionChange = gameEngine.timer.gameTime;
         Gravitator.direction *= -1;
         for (const entity of gameEngine.entities) {
@@ -42,23 +42,30 @@ class Gravitator {
 
         c.wasFalling = c.falling;   // need to remember if we were on the ground before.
         c.falling = true;           // assume falling until collision
-        
+
         for (const entity of gameEngine.entities) { // collision checks
             if (entity == c || !entity.BB) continue; // entity does not have collision
-            const hit = entity.BB.collision(c.BB);
-            if (hit && c.wasFalling && c.falling) {
+
+            const hits = c.BB.collisionSide(entity.BB);
+            if (entity.constructor.name != c.constructor.name)
+                console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
+            
+            if (c.BB.collision(entity.BB) && c.wasFalling && c.falling) {
                 // have landed, clean up data from fall
                 c.falling = false;
                 c.fallStartTime = null;
                 c.fallInitPosition = null;
                 this.v_0 = 0;
                 
-                if(c.lastBB.bottom <= entity.BB.top) {// bounce back, preventing BB overlap.
+                // bounce back, preventing overlap of boxes:
+                if(c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
                     c.location.y = entity.BB.top - c.BB.height;
-                } else {
+                }
+                if(c.lastBB.top >= entity.BB.bottom) { // client below last tick.
                     c.location.y = entity.BB.top + c.BB.height;
                 }
-                if(this.onLanding !== undefined) 
+
+                if (this.onLanding !== undefined)
                     this.onLanding();
                 if (entity.onCollision !== undefined) {
                     entity.onCollision(c);
@@ -74,8 +81,7 @@ class Gravitator {
             // are we already falling?
             const t = (new Date() - c.fallStartTime) / 1000; // current air time(seconds)
             c.location.y = Math.floor(
-                Gravitator.direction * (0.5 * this.g * t ** 2
-                    + this.v_0 * t) + c.fallInitPosition.y);
+                Gravitator.direction * (0.5 * this.g * t ** 2 + this.v_0 * t) + c.fallInitPosition.y);
         }
         c.updateBB();
     }
