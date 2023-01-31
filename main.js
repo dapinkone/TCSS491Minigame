@@ -8,16 +8,16 @@ ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
 	const ctx = canvas.getContext("2d");
 
-	gameEngine.mainCharacter = new MainCharacter({
-			row: 2,
-			mode: "RUN",
-			location: { x: 64*4, y: 64*2 },
-			scale: 2
-		});
+	// gameEngine.mainCharacter = new MainCharacter({
+	// 		row: 2,
+	// 		mode: "RUN",
+	// 		location: { x: 64*4, y: 64*2 },
+	// 		scale: 2
+	// 	});
 	document.getElementById('loc').textContent=document.URL;
 	gameEngine.init(ctx);
 	//gameEngine.addEntity(gameEngine.example = new Block(0, 0, 2*Block.blockwidth, 3*Block.blockwidth, true, true));
-	levels[0]();
+	loadLevel(0);
 
 	//gameEngine.addEntity(new VictoryBlock(14, 2)); // victory present?
 	gameEngine.addEntity(gameEngine.mainCharacter);
