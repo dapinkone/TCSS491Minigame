@@ -1,26 +1,27 @@
 Puzzle platformer
 * ~~ability to set gravity to up/down/left/right~~
 * blocks
-** Falling: that fall(canfall, collision)
-** Stationary: and blocks that stick(!canfall, collision)
-** Phantom: (timed opacity, timed collision)
-** Movable: Player can push block(collision, !heavy)
+** TODO Falling: (canfall, collision)
+** TODO Stationary: and blocks that stick(!canfall, collision)
+** TODO Phantom: (!canfall, timed opacity, timed collision)
+** TODO Movable: Player can push block(collision, !heavy)
+** TODO Moving: timed movement horizontally/vertically
 * collision
-** between blocks
-** between blocks and player
-** player can fall/jump
-*** fine tune jump for variable height based on keyup
+** TODO between blocks
+** TODO between blocks and player
+** INWK player can fall/jump
+*** TODO fine tune jump for variable height based on keyup
 * upgrades:
 ** powers:
-*** [ ] increase in x speed(max speed?)
-*** [ ] double jump
-*** [ ] dash
+*** TODO increase in x speed(max speed?)
+*** TODO double jump
+*** TODO dash
 * HUD
 ** display of
-*** powers got
-*** cooldowns
-*** best time
-*** current time
+*** TODO powers got
+*** TODO cooldowns
+*** TODO best time
+*** TODO current time
 * Map design:
 ** some levels vertical, some horizontal
 
