@@ -64,10 +64,15 @@ const levels = {
         background: [7, 0],
         blocks: [
             ...frame(8, 2),
-            [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
+            [0, 1, 3, 13, 8, false, true],
+            [0, 1, 3, 11, 1, false, true],
+            [0, 1, 5, 9, 1, false, true],
+            [0, 1, 7, 7, 1, false, true], // floating steps
+            [0, 1, 9, 5, 1, false, true],
+
         ],
-        victory: [11, 9],
-        entryPoint: { x: 64*4, y: 64 * 2}      
+        victory: [14, 10],
+        entryPoint: { x: 64 * 1, y: 64 * 10 }
     },
     2: {
         background: [6, 0],
@@ -76,7 +81,7 @@ const levels = {
             [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
         ],
         victory: [11, 8],
-        entryPoint: { x: 64*1, y: 64 * 8}      
+        entryPoint: { x: 64 * 1, y: 64 * 8 }
     },
     3: {
         background: [5, 0],
@@ -85,7 +90,7 @@ const levels = {
             [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
         ],
         victory: [10, 10],
-        entryPoint: { x: 64*4, y: 64 * 8}      
+        entryPoint: { x: 64 * 4, y: 64 * 8 }
     },
     4: {
         background: [4, 0],
@@ -94,7 +99,7 @@ const levels = {
             [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
         ],
         victory: [10, 10],
-        entryPoint: { x: 64*4, y: 64 * 2}      
+        entryPoint: { x: 64 * 4, y: 64 * 2 }
     },
     5: {
         background: [3, 0],
@@ -103,7 +108,7 @@ const levels = {
             [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
         ],
         victory: [10, 10],
-        entryPoint: { x: 64*4, y: 64 * 2}      
+        entryPoint: { x: 64 * 4, y: 64 * 2 }
     },
     6: {
         background: [30, 2],
@@ -112,6 +117,6 @@ const levels = {
             [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
         ],
         victory: [10, 10],
-        entryPoint: { x: 64*4, y: 64 * 2}      
+        entryPoint: { x: 64 * 4, y: 64 * 2 }
     }
 }
