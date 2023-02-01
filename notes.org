@@ -1,0 +1,12 @@
+* Puzzle platformer
+** ~~ability to set gravity to up/down/left/right~~
+** blocks
+*** Falling: that fall(canfall, collision)
+*** Stationary: and blocks that stick(!canfall, collision)
+*** Phantom: (timed opacity, timed collision)
+*** Movable: Player can push block(collision, !heavy)
+** collision
+*** between blocks
+*** between blocks and player
+*** player can fall/jump
+** 

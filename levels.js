@@ -69,7 +69,6 @@ const levels = {
             [0, 1, 5, 9, 1, false, true],
             [0, 1, 7, 7, 1, false, true], // floating steps
             [0, 1, 9, 5, 1, false, true],
-
         ],
         victory: [14, 10],
         entryPoint: { x: 64 * 1, y: 64 * 10 }

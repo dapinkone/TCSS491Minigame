@@ -1,0 +1,11 @@
+* Puzzle platformer
+** ~~ability to set gravity to up/down/left/right~~
+** blocks
+*** that fall(has gravity+collision)
+*** and blocks that stick(no gravity)
+*** Phantom blocks (timed opacity + collision)
+** collision
+*** between blocks
+*** between blocks and player
+*** player can fall/jump
+** 
