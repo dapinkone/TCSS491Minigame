@@ -9,4 +9,17 @@
 *** between blocks
 *** between blocks and player
 *** player can fall/jump
-** 
+**** fine tune jump for variable height based on keyup
+** upgrades:
+*** powers:
+**** [ ] increase in x speed
+**** [ ] double jump
+**** [ ] dash
+** HUD
+*** display of
+**** powers got
+**** cooldowns
+**** best time
+**** current time
+
+
