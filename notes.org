@@ -1,21 +1,32 @@
 Puzzle platformer
 * ~~ability to set gravity to up/down/left/right~~
 * blocks
-** TODO Falling: (canfall, collision)
-** TODO Stationary: and blocks that stick(!canfall, collision)
+** ✔DONE Falling: (canfall, collision)
+CLOSED: [2023-02-01 Wed 15:31]
+** ✔DONE Stationary: and blocks that stick(!canfall, collision)
+CLOSED: [2023-02-01 Wed 15:31]
 ** TODO Phantom: (!canfall, timed opacity, timed collision)
 ** TODO Movable: Player can push block(collision, !heavy)
 ** TODO Moving: timed movement horizontally/vertically
-* collision
-** TODO between blocks
-** TODO between blocks and player
-** INWK player can fall/jump
-*** TODO fine tune jump for variable height based on keyup
+* mechanics
+** collision
+*** TODO between blocks
+*** INWK between blocks and player
+*** INWK player can fall/jump
+**** TODO 
+** jumps
+*** TODO variable jump (jump apex adjusts based on keyup)
+*** TODO coyote timer 
+*** TODO jump buffer ( still jumps if player presses just before landing )
+*** TODO ledge hop?
+*** TODO Pause on loss of focus
 * upgrades:
 ** powers:
 *** TODO increase in x speed(max speed?)
 *** TODO double jump
 *** TODO dash
+*** TODO glide/float
+*** TODO walljump?
 * HUD
 ** display of
 *** TODO powers got
