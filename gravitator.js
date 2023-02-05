@@ -47,10 +47,12 @@ class Gravitator {
             if (entity == c || !entity.BB) continue; // entity does not have collision
 
             const collisionSides = c.BB.collisionSide(entity.BB);
+            
             //if (entity.constructor.name != c.constructor.name)
                 //console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
             const collides = c.BB.collision(entity.BB);
-            
+            if(collisionSides.length > 0)
+                console.log(`${c.constructor.name} hit ${entity.constructor.name} on `, collisionSides);
             if (collides && c.wasFalling && c.falling) {
                 // have landed, clean up data from fall
                 c.falling = false;
@@ -61,7 +63,6 @@ class Gravitator {
                 // bounce back, preventing overlap of boxes:
                 if (c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
                     c.location.y = entity.BB.top - c.BB.height;
-                    console.log(`${c.constructor.name} hit ${entity.constructor.name} on ${collisionSides}`);
                 }
                 else if (c.lastBB.top >= entity.BB.bottom) { //d client below last tick.
                     c.location.y = entity.BB.top + c.BB.height;

@@ -14,14 +14,14 @@ class BoundingBox {
                 bottom: new BoundingBox({
                     width: width,
                     height: height / 2,
-                    location: { x: this.x, y: this.top + height / 2 },
+                    location: { x: this.location.x, y: this.top + height / 2 },
                     color,
                     isMainBox: false,
                 }),
                 left: new BoundingBox({ width: width / 2, height: height, location, color, isMainBox: false }),
                 right: new BoundingBox({
-                    width: width / 2, height: height,
-                    location: { x: this.x + this.width / 2, y: this.top },
+                    width: width / 2, height,
+                    location: { x: this.location.x + this.width / 2, y: this.top },
                     color,
                     isMainBox: false
                 }),
@@ -60,6 +60,15 @@ class BoundingBox {
                 sides[child] = true;
             }
         }
+        if(sides["bottom"] && sides["top"]) { // side hit. top and bottom are aligned.
+            delete sides["bottom"];
+            delete sides["top"];
+        }
+        if(sides["left"] && sides["right"]) { // vertical hit. left/right are aligned.
+            delete sides["left"];
+            delete sides["right"];
+        }
+
         return Object.keys(sides);
     }
     // contains(point) {
@@ -83,6 +92,11 @@ class BoundingBox {
         const ctx = gameEngine.ctx;
         ctx.strokeStyle = this.color;
         ctx.strokeRect(this.location.x, this.location.y, this.width, this.height);
+        if(this.isMainBox) {
+        for(const child of Object.values(this.children)) {
+            child.draw();
+        }
+    }
     }
 
 }
