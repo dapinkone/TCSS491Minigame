@@ -19,6 +19,7 @@ class MainCharacter extends Animator {
         this.collision = true;
         this.canfall = true;
         this.animator = this;
+        this.velocity = {x: 4, y: 0};
         this.updateBB();
         this.updateBB();
         this.gravitator = new Gravitator(this, this.onLanding);
@@ -45,17 +46,21 @@ class MainCharacter extends Animator {
     }
     update() {
         if (gameEngine.keys["d"]) { // moving right
-            this.location.x += 4;
+            this.gravitator.velocity.x = 4;
             this.mirrored = false;
             this.mode = "WALK";
         }
         else if (gameEngine.keys["a"]) { // moving left
-            this.location.x -= 4;
+            this.gravitator.velocity.x = -4;
             this.mirrored = true;
             this.mode = "WALK";
         }
+        if(!(gameEngine.keys["a"] || gameEngine.keys["d"])) {
+            this.gravitator.velocity.x = 0;
+        }
         if (gameEngine.keys['f']) {
             Gravitator.changeDirection();
+            gameEngine.keys['f'] = false;
         }
         if (gameEngine.keys[" "]) { // initiate jump!
                 if(this.mode != "JUMP" && !this.falling)
