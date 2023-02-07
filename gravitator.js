@@ -79,9 +79,11 @@ class Gravitator {
                 }
                 else if (c.lastBB.right <= entity.BB.left) {// client was left last tick.
                     c.location.x = entity.BB.left - c.BB.width;
+                    this.velocity.x = 0;
                 }
                 else if (c.lastBB.left >= entity.BB.right) { // client was right last tick.
                     c.location.x = entity.BB.right;
+                    this.velocity.x = 0;
                 }
                 // if (this.onLanding !== undefined)
                 //     this.onLanding();
