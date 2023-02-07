@@ -51,17 +51,6 @@ const levels = {
     current: 0,
     0: {
         background: [8, 0],
-        // runOfBlocks(sxCol, syRow, row, col, runLength, horizontal = true, collision = false, canfall = false, heavy = false) 
-        blocks: [
-            ...frame(8, 2),
-            [0, 0, 2, 3, 1, false, true, true, false],   // lone example block
-            [0, 0, 3, 11, 3, true, true, true, false], // few blocks together for collision testing
-        ],
-        victory: [14, 2],
-        entryPoint: { x: 64 * 4, y: 64 * 2 },
-    },
-    1: {
-        background: [7, 0],
         blocks: [
             ...frame(8, 2),
             [0, 1, 3, 13, 8, false, true],
@@ -72,6 +61,17 @@ const levels = {
         ],
         victory: [14, 10],
         entryPoint: { x: 64 * 1, y: 64 * 10 }
+    },
+    1: {
+        background: [7, 0],
+        // runOfBlocks(sxCol, syRow, row, col, runLength, horizontal = true, collision = false, canfall = false, heavy = false) 
+        blocks: [
+            ...frame(8, 2),
+            [0, 0, 2, 3, 1, false, true, true, false],   // lone example block
+            [0, 0, 3, 11, 3, true, true, true, false], // few blocks together for collision testing
+        ],
+        victory: [14, 2],
+        entryPoint: { x: 64 * 4, y: 64 * 2 },
     },
     2: {
         background: [6, 0],
