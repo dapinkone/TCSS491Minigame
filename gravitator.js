@@ -26,7 +26,7 @@ class Gravitator {
         this.t_h = 0.25;       // time to apex of "jump" in seconds.
         this.h = 8;            // desired height of "jump"
         this.g = Gravitator.direction * 2 * this.h / (this.t_h ** 2); // acceleration due to gravity.
-        this.velocity = {x:0, y:0};
+        this.velocity = { x: 0, y: 0 };
     }
     jump() {
         let c = this.client;
@@ -53,21 +53,20 @@ class Gravitator {
         }
         c.location.x += this.velocity.x;
         c.updateBB(); // update BB so we have are as accurate as we can be for collision.
-        
+
         c.wasFalling = c.falling;   // need to remember if we were on the ground before.
         c.falling = true;           // assume falling until collision
         for (const entity of gameEngine.entities) { // collision checks
             if (entity == c || !entity.BB) continue; // entity does not have collision
 
             const collisionSides = c.BB.collisionSide(entity.BB);
-            
+
             //if (entity.constructor.name != c.constructor.name)
-                //console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
+            //console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
             const collides = c.BB.collision(entity.BB);
-            if(collisionSides.length > 0)
+            if (collisionSides.length > 0)
                 console.log(`${c.constructor.name} hit ${entity.constructor.name} on `, collisionSides);
             if (collides && c.wasFalling && c.falling) {
-               
 
                 // bounce back, preventing overlap of boxes:
                 if (c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
@@ -102,11 +101,11 @@ class Gravitator {
         c.updateBB();
     }
     haveLanded() {
- // have landed, clean up data from fall
- const c= this.client;
- c.falling = false;
- c.fallStartTime = null;
- c.fallInitPosition = null;
- this.v_0 = 0;
+        // have landed, clean up data from fall
+        const c = this.client;
+        c.falling = false;
+        c.fallStartTime = null;
+        c.fallInitPosition = null;
+        this.v_0 = 0;
     }
 }

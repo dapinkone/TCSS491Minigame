@@ -15,11 +15,11 @@ class MainCharacter extends Animator {
         super("assets/characters.png", 5, (32 * row), 32, 32, 4, fps, scale);
         Object.assign(this, { location, mode, row });
         console.log(this, this.location);
-        
+
         this.collision = true;
         this.canfall = true;
         this.animator = this;
-        this.velocity = {x: 4, y: 0};
+        this.velocity = { x: 4, y: 0 };
         this.updateBB();
         this.updateBB();
         this.gravitator = new Gravitator(this, this.onLanding);
@@ -33,14 +33,14 @@ class MainCharacter extends Animator {
         return seq[this.modeIndex];
     }
 
-	updateBB() {
+    updateBB() {
         if (this.collision) {
             this.lastBB = this.BB;
             this.BB = new BoundingBox({
                 width: this.width * 0.6,
                 height: this.height,
                 location: this.location,
-                color: "green"
+                color: "white"
             });
         }
     }
@@ -55,7 +55,7 @@ class MainCharacter extends Animator {
             this.mirrored = true;
             this.mode = "WALK";
         }
-        if(!(gameEngine.keys["a"] || gameEngine.keys["d"])) {
+        if (!(gameEngine.keys["a"] || gameEngine.keys["d"])) {
             this.gravitator.velocity.x = 0;
         }
         if (gameEngine.keys['f']) {
@@ -63,11 +63,11 @@ class MainCharacter extends Animator {
             gameEngine.keys['f'] = false;
         }
         if (gameEngine.keys[" "]) { // initiate jump!
-                if(this.mode != "JUMP" && !this.falling)
-                    this.gravitator.jump();
+            if (this.mode != "JUMP" && !this.falling)
+                this.gravitator.jump();
         }
         // not in the air, not walking
-        else if (this.mode != "JUMP" && !(gameEngine.keys['a'] | gameEngine.keys['d'])) { 
+        else if (this.mode != "JUMP" && !(gameEngine.keys['a'] | gameEngine.keys['d'])) {
             this.mode = "IDLE";
         }
         this.gravitator.nextPosition();
