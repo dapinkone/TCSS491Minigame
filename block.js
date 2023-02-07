@@ -65,7 +65,7 @@ class Mover extends Block {
         const startx = this.startCol * Block.blockwidth;
         const endx = this.endCol * Block.blockwidth;
         const diff = endx - startx;
-        console.log([this.location.x, startx, endx])
+        
         if(this.location.x > endx) {
             this.direction = -1;
             this.location.x = endx;
