@@ -64,7 +64,7 @@ const levels = {
         ],
 
         victory: [10, 14],
-        entryPoint: { x: 64 * 1, y: 64 * 10 }
+        entryPoint: { x: 64 * 1, y: 64 * 10 }// entrypoint at bottom
     },
     1: {
         background: [7, 0],
@@ -80,7 +80,7 @@ const levels = {
             [9, 3, 12],
         ],
         victory: [ 2, 14],
-        entryPoint: { x: 64 * 4, y: 64 * 2 },
+        entryPoint: { x: 64 * 1, y: 64 * 10 }// entrypoint at bottom
     },
     2: {
         background: [6, 0],
