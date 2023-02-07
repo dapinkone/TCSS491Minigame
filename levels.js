@@ -41,6 +41,7 @@ function loadLevel(levelnum) {
         location: level.entryPoint,
         scale: 2
     });
+    gameEngine.addEntity(new HUD());
     gameEngine.addEntity(gameEngine.mainCharacter);
 }
 const frame = (sxCol, syRow) => [

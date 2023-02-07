@@ -82,3 +82,18 @@ class Mover extends Block {
         super.draw();
     }
 }
+class Phantom extends Block {
+    constructor(row, col, rate) {
+        this.alpha = 1;
+        Object.assign(self, {row, col});
+        super(64, 32, col*Block.blockwidth, row*Block.blockwidth, true, false, false);
+    }
+    update() {
+        
+        super.updateBB();
+    }
+    draw() {
+        gameEngine.ctx.save();
+
+    }
+}

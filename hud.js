@@ -1,7 +1,6 @@
 class HUD {
     static instance;
     constructor() {
-        if(HUD.instance !== undefined) return HUD.instance;
         this.upgrades  = {
             "doubleJump": 0,
             "dash": 0,
@@ -15,6 +14,10 @@ class HUD {
 
     }
     draw() {
-        
+        const ctx = gameEngine.ctx;
+        ctx.fillStyle = "white";
+        ctx.font = "12pt serif";
+        const coords =  gameEngine.mainCharacter.location;
+        ctx.fillText(`${Math.floor(coords.x)}, ${Math.floor(coords.y)}`, 0, 12);
     }
 }
