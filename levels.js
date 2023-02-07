@@ -57,17 +57,36 @@ const levels = {
         background: [8, 0],
         blocks: [
             ...frame(8, 2),
-            [0, 1, 3, 13, 8, false, true],
+            [0, 1, 3, 13, 8, false, true],// vertical bar
             [0, 1, 3, 11, 1, false, true],
             [0, 1, 5, 9, 1, false, true],
             [0, 1, 7, 7, 1, false, true], // floating steps
-            [0, 1, 9, 5, 1, false, true],
+            [0, 1, 9, 5, 1, false, true], 
         ],
 
         victory: [10, 14],
         entryPoint: { x: 64 * 1, y: 64 * 10 }// entrypoint at bottom
     },
     1: {
+        background: [6, 0],
+        blocks: [
+            ...frame(8, 2),
+            
+            [0, 1, 4, 11, 1, false, true],
+            [0, 1, 4, 9, 1, false, true],
+            [0, 1, 4, 7, 1, false, true], 
+            [0, 1, 4, 5, 1, false, true], 
+            [0, 1, 4, 3, 1, false, true], 
+            [0, 1, 5, 1, 1, false, true], 
+            [0, 1, 7, 3, 1, false, true], 
+            [0, 1, 9, 1, 1, false, true], 
+
+            [0, 1, 3, 13, 8, false, true], // vertical bar
+        ],
+        victory: [10,14],
+        entryPoint: { x: 64 * 1, y: 64 * 8 }
+    },
+    2: {
         background: [7, 0],
         // runOfBlocks(sxCol, syRow, row, col, runLength, horizontal = true, collision = false, canfall = false, heavy = false) 
         blocks: [
@@ -83,15 +102,7 @@ const levels = {
         victory: [ 2, 14],
         entryPoint: { x: 64 * 1, y: 64 * 10 }// entrypoint at bottom
     },
-    2: {
-        background: [6, 0],
-        blocks: [
-            ...frame(8, 2),
-            [0, 0, 3, 11, 4, true, true, true, false], // few blocks together for collision testing
-        ],
-        victory: [8,11],
-        entryPoint: { x: 64 * 1, y: 64 * 8 }
-    },
+
     3: {
         background: [5, 0],
         blocks: [
