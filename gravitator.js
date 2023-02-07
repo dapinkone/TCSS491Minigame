@@ -6,7 +6,7 @@ class Gravitator {
     static changeDirection = () => {
         if (gameEngine.timer.gameTime - this.timeOfDirectionChange < 1) return; // too soon.
         this.timeOfDirectionChange = gameEngine.timer.gameTime;
-        Gravitator.direction *= -1;
+        Gravitator.direction *= 1;
         for (const entity of gameEngine.entities) {
             const now = new Date();
             if (entity.canfall) {
@@ -67,7 +67,6 @@ class Gravitator {
             if (collisionSides.length > 0)
                 console.log(`${c.constructor.name} hit ${entity.constructor.name} on `, collisionSides);
             if (collides && c.wasFalling && c.falling) {
-
                 // bounce back, preventing overlap of boxes:
                 if (c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
                     c.location.y = entity.BB.top - c.BB.height;
@@ -76,17 +75,17 @@ class Gravitator {
                 else if (c.lastBB.top >= entity.BB.bottom) { //d client below last tick.
                     c.location.y = entity.BB.top + c.BB.height;
                 }
-                else if (c.lastBB.right <= entity.BB.left) {// client was left last tick.
-                    c.location.x = entity.BB.left - c.BB.width;
-                    this.velocity.x = 0;
-                }
-                else if (c.lastBB.left >= entity.BB.right) { // client was right last tick.
-                    c.location.x = entity.BB.right;
-                    this.velocity.x = 0;
-                }
                 // if (this.onLanding !== undefined)
                 //     this.onLanding();
                 //   break;
+            }
+            if (collides && c.lastBB.right <= entity.BB.left) {// client was left last tick.
+                c.location.x = entity.BB.left - c.BB.width;
+                this.velocity.x = 0;
+            }
+            else if (collides && c.lastBB.left >= entity.BB.right) { // client was right last tick.
+                c.location.x = entity.BB.right;
+                this.velocity.x = 0;
             }
 
             if (collides && c.onCollision !== undefined) {
