@@ -43,7 +43,7 @@ class Block {
 }
 class VictoryBlock extends Block {
     constructor(row, col) {
-        super(432, 288, row*Block.blockwidth, col*Block.blockwidth, true, false, false);
+        super(432, 288, col*Block.blockwidth, row*Block.blockwidth, true, false, false);
     }
     onCollision(entity) {
         // if we touch the box, move to the next level
@@ -52,5 +52,33 @@ class VictoryBlock extends Block {
             console.log("Victory! loading level " + levels.current);
             loadLevel(levels.current);
         }
+    }
+}
+class Mover extends Block {
+    // blocks that move horizontally
+    constructor(row, startCol, endCol) {
+        super(64, 32, startCol*Block.blockwidth, row*Block.blockwidth, true, false, false);
+        Object.assign(this, {row, startCol, endCol});
+        this.direction = 1;
+    }
+    update() {
+        const startx = this.startCol * Block.blockwidth;
+        const endx = this.endCol * Block.blockwidth;
+        const diff = endx - startx;
+        console.log([this.location.x, startx, endx])
+        if(this.location.x > endx) {
+            this.direction = -1;
+            this.location.x = endx;
+        }
+        if(this.location.x < startx) {
+            this.direction = 1;
+            this.location.x= startx;
+        }
+        this.location.x += this.direction * 2;
+        this.animator.location = this.location;
+        super.updateBB();
+    }
+    draw() {
+        super.draw();
     }
 }

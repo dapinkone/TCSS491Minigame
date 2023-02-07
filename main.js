@@ -11,6 +11,6 @@ ASSET_MANAGER.downloadAll(() => {
 
 	document.getElementById('loc').textContent=document.URL;
 	gameEngine.init(ctx);
-	loadLevel(0);
+	loadLevel(levels.current);
 	gameEngine.start();
 });
