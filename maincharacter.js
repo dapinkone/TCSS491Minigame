@@ -37,7 +37,7 @@ class MainCharacter extends Animator {
         if (this.collision) {
             this.lastBB = this.BB;
             this.BB = new BoundingBox({
-                width: this.width,
+                width: this.width * 0.6,
                 height: this.height,
                 location: this.location,
                 color: "green"
