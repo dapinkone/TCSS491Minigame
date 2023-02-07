@@ -17,7 +17,8 @@ class HUD {
         const ctx = gameEngine.ctx;
         ctx.fillStyle = "white";
         ctx.font = "12pt serif";
-        const coords =  gameEngine.mainCharacter.location;
-        ctx.fillText(`${Math.floor(coords.x)}, ${Math.floor(coords.y)}`, 0, 12);
+        const char = gameEngine.mainCharacter;
+        const coords =  char.location;
+        ctx.fillText(`${Math.floor(coords.x)}, ${Math.floor(coords.y)} ${char.falling}`, 0, 12);
     }
 }
