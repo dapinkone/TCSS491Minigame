@@ -88,7 +88,7 @@ function loadLevelFromMap(levelMap) {
     const isFrame = p => pixelEq(p, [0, 0, 0, 255]);     // "frame" is black
     const isPlatform = p => pixelEq(p, [255, 0, 0, 255]); // platforms are red.
     const isVictory = p => pixelEq(p, [0, 255, 0, 255]); // victory block (green)
-    const isNOP = p => pixelEq(pixel, [0,0,0,0] ); // transparent is NOP
+    const isNOP = p => pixelEq(p, [0,0,0,0] ); // transparent is NOP
 
     for (let row = 0; row < courseMap.height; row++) {
         let moverStart;
