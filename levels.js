@@ -83,13 +83,19 @@ function loadLevelFromMap(levelMap) {
         .every(i => a[i] == b[i]);
 
     courseMap.draw();
+    // some syntax sugar for looking for different blocks trying to separate data from logic.
+    const isMover = p => pixelEq(p, [255, 255, 0, 255]); // movers are yellow
+    const isFrame = p => pixelEq(p, [0, 0, 0, 255]);     // "frame" is black
+    const isPlatform = p => pixelEq(p, [255, 0, 0, 255]); // platforms are red.
+    const isVictory = p => pixelEq(p, [0, 255, 0, 255]); // victory block (green)
+    const isNOP = p => pixelEq(pixel, [0,0,0,0] ); // transparent is NOP
 
     for (let row = 0; row < courseMap.height; row++) {
         let moverStart;
         let moverLength = 0;
         for (let col = 0; col < courseMap.width; col++) {
             const pixel = courseMap.pixels[row][col];
-            if (pixelEq(pixel, [255, 255, 0, 255])) { // movers are yellow
+            if (isMover(pixel)) {
                 console.log("mover:", `(${col},${row})`)
                 if (moverStart === undefined) {
                     moverStart = col;
@@ -102,17 +108,17 @@ function loadLevelFromMap(levelMap) {
                 moverStart = moverLength = undefined;
             }
 
-            if (pixelEq(pixel, [0, 0, 0, 255])) { // frame (black)
+            if (isFrame(pixel)) { // frame (black)
                 console.log("frame", row, col);
                 runOfBlocks(8, 2, row, col, 1, true, true);
             }
-            else if (pixelEq(pixel, [255, 0, 0, 255])) { // platform(red)
+            else if (isPlatform(pixel)) { // platform(red)
                 console.log('platform');
                 runOfBlocks(0, 1, row, col, 1, true, true);
-            } else if (pixelEq(pixel, [0, 255, 0, 255])) { // victory block (green)
+            } else if (isVictory(pixel)) { 
                 console.log("victoryblock", row, col);
                 gameEngine.addEntity(new VictoryBlock(row, col));
-            } else if (pixelEq(pixel, [0,0,0,0] )) { // transparent is NOP
+            } else if (isNOP(pixel)) {
                 // pass
             } else {
                 console.log("unknown pixel: ", pixel);
