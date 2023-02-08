@@ -88,7 +88,7 @@ function loadLevelFromMap(levelMap) {
     const isFrame = p => pixelEq(p, [0, 0, 0, 255]);     // "frame" is black
     const isPlatform = p => pixelEq(p, [255, 0, 0, 255]); // platforms are red.
     const isVictory = p => pixelEq(p, [0, 255, 0, 255]); // victory block (green)
-    const isNOP = p => pixelEq(p, [0,0,0,0] ); // transparent is NOP
+    const isNOP = p => pixelEq(p, [0,0,0,0] ) || pixelEq(p, [255,255,255,255]); // white/transparent is NOP
 
     for (let row = 0; row < courseMap.height; row++) {
         let moverStart;
@@ -96,27 +96,22 @@ function loadLevelFromMap(levelMap) {
         for (let col = 0; col < courseMap.width; col++) {
             const pixel = courseMap.pixels[row][col];
             if (isMover(pixel)) {
-                console.log("mover:", `(${col},${row})`)
                 if (moverStart === undefined) {
                     moverStart = col;
                 } else {
                     moverLength++;
                 }
             } else if (moverStart !== undefined) { // witness end of a mover run
-                console.log("mover:", moverStart, moverLength, moverStart + moverLength);
                 gameEngine.addEntity(new Mover(row, moverStart, moverStart + moverLength));
                 moverStart = moverLength = undefined;
             }
 
             if (isFrame(pixel)) { // frame (black)
-                console.log("frame", row, col);
                 runOfBlocks(8, 2, row, col, 1, true, true);
             }
             else if (isPlatform(pixel)) { // platform(red)
-                console.log('platform');
                 runOfBlocks(0, 1, row, col, 1, true, true);
             } else if (isVictory(pixel)) { 
-                console.log("victoryblock", row, col);
                 gameEngine.addEntity(new VictoryBlock(row, col));
             } else if (isNOP(pixel)) {
                 // pass
