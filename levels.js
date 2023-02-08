@@ -168,7 +168,7 @@ const levels = {
     2: {
         background: [7, 0],
         // runOfBlocks(sxCol, syRow, row, col, runLength, horizontal = true, collision = false, canfall = false, heavy = false) 
-        blocks: [
+        /*blocks: [
             ...frame(8, 2),
             [0, 0, 2, 3, 1, false, true, true, false],   // lone example block
             [0, 0, 3, 11, 3, true, true, true, false], // few blocks together for collision testing
@@ -178,7 +178,8 @@ const levels = {
             [7, 1, 10],
             [9, 3, 12],
         ],
-        victory: [2, 14],
+        victory: [2, 14],*/
+        levelMap: '.assets/level2.png',
         entryPoint: { x: 64 * 1, y: 64 * 10 }// entrypoint at bottom
     },
 
@@ -217,5 +218,11 @@ const levels = {
         ],
         victory: [10, 10],
         entryPoint: { x: 64 * 4, y: 64 * 2 }
+    },
+    7: {
+        background: [0, 0],
+        entryPoint: { x: 64 * 4, y: 64 * 2 },
+        levelMap: './assets/level7.png',
     }
+
 }

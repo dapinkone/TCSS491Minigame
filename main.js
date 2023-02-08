@@ -5,7 +5,10 @@ let assetNames = [
 	'characters.png',
 	'basicLevelMapImage.png',
 	'level0.png',
-	'level1.png'
+	'level1.png',
+	'level2.png',
+	//'level3.png',
+	'level7.png',
 ];
 for(const name of assetNames)
 	ASSET_MANAGER.queueDownload("assets/" + name);
