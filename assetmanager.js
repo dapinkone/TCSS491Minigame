@@ -33,6 +33,7 @@ class AssetManager {
     getAsset(path) {
         if(!this.cache[path]) {
             const img = new Image();
+            
             console.log(path);
 
             img.addEventListener("load", () => {
@@ -46,7 +47,7 @@ class AssetManager {
                 this.errorCount++;
             //    if (this.isDone()) callback();
             });
-
+            
             img.src = path; // triggers download by telling browser where image data exists
             this.cache[path] = img;
         }

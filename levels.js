@@ -28,7 +28,7 @@ function loadLevel(levelnum) {
 
     const level = levels[levelnum];
     // background
-    //buildBackground(...level.background);
+    buildBackground(...level.background);
     if (level.levelMap) loadLevelFromMap(level.levelMap);
     else {
         // runs of blocks ( design is run-length-encoded)
@@ -56,7 +56,7 @@ function loadLevel(levelnum) {
 }
 
 function loadLevelFromMap(levelMap) {
-    // TODO: code cleanup, add "heavy" and "phantom" blocks
+    // TODO: code cleanup, add "heavy", "phantom" blocks, as well as entry point
     console.log("loading level from ", levelMap);
     courseMap = new class {
         constructor() {
@@ -146,7 +146,7 @@ const levels = {
     },
     1: {
         background: [6, 0],
-        blocks: [
+        /*blocks: [
             ...frame(8, 2),
 
             [0, 1, 4, 11, 1, false, true],
@@ -160,7 +160,8 @@ const levels = {
 
             [0, 1, 3, 13, 8, false, true], // vertical bar
         ],
-        victory: [10, 14],
+        victory: [10, 14],*/
+        levelMap: "./assets/level1.png",
         entryPoint: { x: 64 * 1, y: 64 * 8 }
     },
     2: {
