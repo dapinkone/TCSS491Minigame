@@ -92,18 +92,16 @@ function loadLevelFromMap(levelMap) {
 
     for (let row = 0; row < courseMap.height; row++) {
         let moverStart;
-        let moverLength = 0;
+        //let moverLength = 0;
         for (let col = 0; col < courseMap.width; col++) {
             const pixel = courseMap.pixels[row][col];
             if (isMover(pixel)) {
                 if (moverStart === undefined) {
                     moverStart = col;
-                } else {
-                    moverLength++;
-                }
+                } 
             } else if (moverStart !== undefined) { // witness end of a mover run
-                gameEngine.addEntity(new Mover(row, moverStart, moverStart + moverLength));
-                moverStart = moverLength = undefined;
+                gameEngine.addEntity(new Mover(row, moverStart, col - 1));
+                moverStart = undefined;
             }
 
             if (isFrame(pixel)) { // frame (black)
@@ -179,7 +177,7 @@ const levels = {
             [9, 3, 12],
         ],
         victory: [2, 14],*/
-        levelMap: '.assets/level2.png',
+        levelMap: './assets/level2.png',
         entryPoint: { x: 64 * 1, y: 64 * 10 }// entrypoint at bottom
     },
 
