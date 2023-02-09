@@ -72,6 +72,9 @@ class MainCharacter extends Animator {
         }
         this.gravitator.nextPosition();
         super.update();
+        camera = {
+            x: Math.floor(this.location.x - 1024/2),
+            y: Math.floor(this.location.y - 768/2)};
     }
     draw() {
         super.draw(gameEngine.ctx);

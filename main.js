@@ -1,5 +1,5 @@
 const gameEngine = new GameEngine();
-
+let camera = {x: 0, y: 0};
 const ASSET_MANAGER = new AssetManager();
 let assetNames = [
 	'characters.png',

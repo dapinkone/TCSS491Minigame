@@ -91,7 +91,7 @@ class BoundingBox {
     draw() {
         const ctx = gameEngine.ctx;
         ctx.strokeStyle = this.color;
-        ctx.strokeRect(this.location.x, this.location.y, this.width, this.height);
+        ctx.strokeRect(this.location.x - camera.x, this.location.y - camera.y, this.width, this.height);
         if(this.isMainBox) {
         for(const child of Object.values(this.children)) {
             child.draw();

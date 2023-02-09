@@ -30,17 +30,18 @@ class Animator {
 		this.ctx = ctx;
 		let targetx = this.sx+(this.sWidth*(this.spriteIndex)); // sprite source location
 		ctx.save();
-		let destX = this.location.x;
+		let destX = this.location.x - camera.x;
 		if(this.mirrored) { // facing left
 			ctx.scale(-1, 1);
 			destX *= -1;
 			destX -= this.sWidth;
 		}
+		let destY = this.location.y - camera.y;
 		//ctx.drawImage(this.sheet, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 		ctx.drawImage(this.sheet,
 			targetx, this.sy, 				// starting x, starting y in sprite sheet
 			this.sWidth, this.sHeight, 		// size in sprite sheet
-			destX, this.location.y, 		// desired location in canvas
+			destX, destY,			 		// desired location in canvas
 			this.width, this.height,		// desired size in canvas
 		);
 		ctx.restore();

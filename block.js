@@ -94,6 +94,5 @@ class Phantom extends Block {
     }
     draw() {
         gameEngine.ctx.save();
-
     }
 }
