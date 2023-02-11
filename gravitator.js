@@ -47,9 +47,12 @@ class Gravitator {
         if (c.collision && c.canfall && c.falling) { // fall until collision
             // are we already falling?
             const t = (new Date() - c.fallStartTime) / 1000; // current air time(seconds)
-            c.location.y = Math.floor(
+            const newY = Math.floor(
                 Gravitator.direction * (0.5 * this.g * t ** 2 + this.v_0 * t) + c.fallInitPosition.y
             );
+    
+            const teriminalVelocity = 60;
+            c.location.y = Math.min(newY, c.location.y + teriminalVelocity);
         }
         c.location.x += this.velocity.x;
         c.updateBB(); // update BB so we have are as accurate as we can be for collision.
