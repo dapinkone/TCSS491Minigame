@@ -9,6 +9,7 @@ let assetNames = [
 	'level2.png',
 	//'level3.png',
 	'level7.png',
+	'level8.png',
 ];
 for(const name of assetNames)
 	ASSET_MANAGER.queueDownload("assets/" + name);

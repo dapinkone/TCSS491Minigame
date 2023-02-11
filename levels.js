@@ -221,6 +221,12 @@ const levels = {
         background: [0, 0],
         entryPoint: { x: 64 * 4, y: 64 * 2 },
         levelMap: './assets/level7.png',
+    },
+    8: {
+        background: [0, 0],
+        entryPoint: {x: 64, y: 64},
+        levelMap: './assets/level8.png',
     }
+    
 
 }
