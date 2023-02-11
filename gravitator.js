@@ -76,7 +76,10 @@ class Gravitator {
                     this.haveLanded();
                 }
                 else if (c.lastBB.top >= entity.BB.bottom) { //d client below last tick.
-                    c.location.y = entity.BB.top + c.BB.height;
+                    c.location.y = entity.BB.bottom;//entity.BB.top + c.BB.height;
+                    
+                    if(c instanceof MainCharacter)
+                        console.log("character is below");
                 }
                 // if (this.onLanding !== undefined)
                 //     this.onLanding();

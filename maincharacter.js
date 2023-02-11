@@ -12,7 +12,8 @@ class MainCharacter extends Animator {
     };
 
     constructor({ row = 0, mode = "WALK", fps = 5, scale = 1, location = { x: 0, y: 0 } }) {
-        super("assets/characters.png", 5, (32 * row), 32, 32, 4, fps, scale);
+        //(filename, sx, sy, sWidth, sHeight, sLength=4, fps=5, scale=3) {
+        super("assets/characters.png", 5, (32 * row)+7, 32, 32-7, 4, fps, scale);
         Object.assign(this, { location, mode, row });
         console.log(this, this.location);
 
