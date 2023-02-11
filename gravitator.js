@@ -1,22 +1,22 @@
 class Gravitator {
     // class to handle the effects of gravity on a client entity.
 
-    static direction = 1;
-    static timeOfDirectionChange = 0;
-    static changeDirection = () => {
-        if (gameEngine.timer.gameTime - this.timeOfDirectionChange < 1) return; // too soon.
-        this.timeOfDirectionChange = gameEngine.timer.gameTime;
-        Gravitator.direction *= 1;
-        for (const entity of gameEngine.entities) {
-            const now = new Date();
-            if (entity.canfall) {
-                entity.falling = true;
-                entity.wasFalling = true;
-                entity.fallInitPosition = entity.location;
-                entity.fallStartTime = now;
-            }
-        }
-    }
+    // static direction = 1;
+    // static timeOfDirectionChange = 0;
+    // static changeDirection = () => {
+    //     //if (gameEngine.timer.gameTime - this.timeOfDirectionChange < 1) return; // too soon.
+    //     //this.timeOfDirectionChange = gameEngine.timer.gameTime;
+
+    //     for (const entity of gameEngine.entities) {
+    //         const now = new Date();
+    //         if (entity.canfall) {
+    //             entity.falling = true;
+    //             entity.wasFalling = true;
+    //             entity.fallInitPosition = entity.location;
+    //             entity.fallStartTime = now;
+    //         }
+    //     }
+    // }
 
     constructor(client, onLanding) {
         this.client = client;
@@ -25,12 +25,12 @@ class Gravitator {
         // gravity-based constants:
         this.t_h = 0.25;       // time to apex of "jump" in seconds.
         this.h = 8;            // desired height of "jump"
-        this.g = Gravitator.direction * 2 * this.h / (this.t_h ** 2); // acceleration due to gravity.
+        this.g = 2 * this.h / (this.t_h ** 2); // acceleration due to gravity.
         this.velocity = { x: 0, y: 0 };
     }
     jump() {
         let c = this.client;
-        this.v_0 = Gravitator.direction * -2 * this.h / this.t_h;
+        this.v_0 =  -2 * this.h / this.t_h;
         c.fallInitPosition = c.location;
         c.fallStartTime = new Date();
     }
@@ -48,7 +48,7 @@ class Gravitator {
             // are we already falling?
             const t = (new Date() - c.fallStartTime) / 1000; // current air time(seconds)
             const newY = Math.floor(
-                Gravitator.direction * (0.5 * this.g * t ** 2 + this.v_0 * t) + c.fallInitPosition.y
+               (0.5 * this.g * t ** 2 + this.v_0 * t) + c.fallInitPosition.y
             );
     
             const teriminalVelocity = 60;
