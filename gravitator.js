@@ -77,13 +77,13 @@ class Gravitator {
                 if (c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
                     c.location.y = entity.BB.top - c.BB.height;
                     this.haveLanded();
+                    
                 }
                 else if (c.lastBB.top >= entity.BB.bottom) { //d client below last tick.
                     c.location.y = entity.BB.bottom;
                     // TODO: negate vertical velocity here.
                     this.velocity.y = 0; // start falling as if we'd just walked off ledge?
                     this.fallStartTime = new Date();
-
                 }
             }
             if (collides && c.lastBB.right <= entity.BB.left) {// client was left last tick.

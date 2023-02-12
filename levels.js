@@ -1,3 +1,4 @@
+
 const runOfBlocks = (sxCol, syRow, row, col, runLength, horizontal = true, collision = false, canfall = false, heavy = false) => {
     // use a run-length encoding to build the levels a row or column at a time
     for (const i of Array(runLength).keys()) { // draw some ground
@@ -25,7 +26,6 @@ function loadLevel(levelnum) {
     // clear entities
     gameEngine.clearEntities();
 
-
     const level = levels[levelnum];
     // background
     buildBackground(...level.background);
@@ -49,10 +49,6 @@ function loadLevel(levelnum) {
     });
     gameEngine.addEntity(new HUD());
     gameEngine.addEntity(gameEngine.mainCharacter);
-
-
-
-
 }
 
 function loadLevelFromMap(levelMap) {
@@ -79,7 +75,7 @@ function loadLevelFromMap(levelMap) {
         draw() { }
         update() { }
     }();
-    const pixelEq = (a, b) => a.length == b.length && [...Array(a.length).keys()]
+    const pixelEq = (a, b) => a && b && a.length == b.length && [...Array(a.length).keys()]
         .every(i => a[i] == b[i]);
 
     courseMap.draw();
@@ -89,32 +85,34 @@ function loadLevelFromMap(levelMap) {
     const isPlatform = p => pixelEq(p, [255, 0, 0, 255]); // platforms are red.
     const isVictory = p => pixelEq(p, [0, 255, 0, 255]); // victory block (green)
     const isNOP = p => pixelEq(p, [0,0,0,0] ) || pixelEq(p, [255,255,255,255]); // white/transparent is NOP
-
+    
     for (let row = 0; row < courseMap.height; row++) {
-        let moverStart;
-        //let moverLength = 0;
-        for (let col = 0; col < courseMap.width; col++) {
+        let runStart = 0;
+        let runType = courseMap.pixels[row][0];
+        for (let col = 1; col <= courseMap.width; col++) {
             const pixel = courseMap.pixels[row][col];
-            if (isMover(pixel)) {
-                if (moverStart === undefined) {
-                    moverStart = col;
-                } 
-            } else if (moverStart !== undefined) { // witness end of a mover run
-                gameEngine.addEntity(new Mover(row, moverStart, col - 1));
-                moverStart = undefined;
-            }
+            // row, col
+            if(!pixelEq(pixel, runType)) {
+                let runStop = col;
+                // build the run of blocks
+                //runOfBlocks(sxCol, syRow, row, col, runLength, horizontal = true, collision = false, canfall = false, heavy = false) => {
+                console.log("run of length", runStop, runStart, " type ", runType);
+                if(isMover(runType)) {
+                    gameEngine.addEntity(new Mover(row, runStart, col - 1));
+                } else if (isFrame(runType)) { // frame (black)
+                    runOfBlocks(8, 2, row, runStart, runStop - runStart, true, true);
+                }
+                else if (isPlatform(runType)) { // platform(red)
+                    runOfBlocks(0, 1, row, runStart, runStop - runStart, true, true);
+                } else if (isVictory(runType)) { 
+                    gameEngine.addEntity(new VictoryBlock(row, col - 1));
+                }  else {
+                    //console.log("unknown pixel: ", pixel);
+                }
 
-            if (isFrame(pixel)) { // frame (black)
-                runOfBlocks(8, 2, row, col, 1, true, true);
-            }
-            else if (isPlatform(pixel)) { // platform(red)
-                runOfBlocks(0, 1, row, col, 1, true, true);
-            } else if (isVictory(pixel)) { 
-                gameEngine.addEntity(new VictoryBlock(row, col));
-            } else if (isNOP(pixel)) {
-                // pass
-            } else {
-                console.log("unknown pixel: ", pixel);
+                // starting a new run
+                runStart = col;
+                runType = pixel;
             }
         }
     }
