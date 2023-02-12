@@ -23,8 +23,8 @@ class Gravitator {
         this.v_0 = 0;// initial velocity in the y axis (blocks don't jump)
         this.onLanding = onLanding; // function to run when we land(change to walk mode or whatever)       
         // gravity-based constants:
-        this.t_h = 0.25;       // time to apex of "jump" in seconds.
-        this.h = 8;            // desired height of "jump"
+        this.t_h = 0.3;       // time to apex of "jump" in seconds.
+        this.h = 3;            // desired height of "jump"
         this.g = 2 * this.h / (this.t_h ** 2); // acceleration due to gravity.
         this.velocity = { x: 0, y: 0 };
     }
@@ -47,14 +47,17 @@ class Gravitator {
         if (c.collision && c.canfall && c.falling) { // fall until collision
             // are we already falling?
             const t = (new Date() - c.fallStartTime) / 1000; // current air time(seconds)
-            const newY = Math.floor(
-               (0.5 * this.g * t ** 2 + this.v_0 * t) + c.fallInitPosition.y
-            );
-    
-            const teriminalVelocity = 60;
-            c.location.y = Math.min(newY, c.location.y + teriminalVelocity);
+            // const newY = Math.floor(
+            //    (0.5 * this.g * t ** 2 + this.v_0 * t) + c.fallInitPosition.y
+            // );
+            const newV = Math.floor(this.g * t + this.v_0); // expected current velocity
+            const terminalVelocity = 60;
+            //c.location.y = Math.min(newY, c.location.y + teriminalVelocity);
+            this.velocity.y = Math.min(newV, terminalVelocity);
         }
+        
         c.location.x += this.velocity.x;
+        c.location.y += this.velocity.y;
         c.updateBB(); // update BB so we have are as accurate as we can be for collision.
 
         c.wasFalling = c.falling;   // need to remember if we were on the ground before.
@@ -78,6 +81,9 @@ class Gravitator {
                 else if (c.lastBB.top >= entity.BB.bottom) { //d client below last tick.
                     c.location.y = entity.BB.bottom;
                     // TODO: negate vertical velocity here.
+                    this.velocity.y = 0; // start falling as if we'd just walked off ledge?
+                    this.fallStartTime = new Date();
+
                 }
             }
             if (collides && c.lastBB.right <= entity.BB.left) {// client was left last tick.
@@ -103,6 +109,7 @@ class Gravitator {
     haveLanded() {
         // have landed, clean up data from fall
         const c = this.client;
+        this.velocity.y = 0;
         c.falling = false;
         c.fallStartTime = null;
         c.fallInitPosition = null;
