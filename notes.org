@@ -57,3 +57,8 @@ CLOSED: [2023-02-01 Wed 15:31]
 
 * story (npc?)
 * storypoints on maps?
+
+
+Story Notes:
+We begin with a block / industrial theme in the early game, and progress into an earth / forest theme, then a sky, and finally a space stage. My main character is an archer who has been imprisoned, and it looking to make his escape from the depths. 
+Working Title: Archer's Escape
