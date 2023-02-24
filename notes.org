@@ -36,3 +36,24 @@ CLOSED: [2023-02-01 Wed 15:31]
 * Map design:
 ** some levels vertical, some horizontal
 
+------------------
+* Need to fix collision(wall walking, x velocity sticking)
+* More level design to finish out tutorial.
+* Level select after tutorial A la megaman.
+* post-tutorial levels: power unlocks
+** miniboss per post-tutorial level?
+** Main boss
+
+* Arrows or other attack.
+
+* blocks:
+** phantom blocks.
+** turrets
+** death & respawn, death blocks/spikes
+
+* powerups
+** energy mechanic
+** powerup swap?
+
+* story (npc?)
+* storypoints on maps?
