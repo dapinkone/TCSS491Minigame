@@ -29,30 +29,17 @@ class Gravitator {
         this.velocity = { x: 0, y: 0 };
     }
     jump() {
-        let c = this.client;
-        this.v_0 =  -2 * this.h / this.t_h;
-        c.fallInitPosition = c.location;
-        c.fallStartTime = new Date();
+        this.velocity.y =  -2 * this.h / this.t_h;
     }
     nextPosition() {
         const c = this.client;
-        c.animator.location = c.location;
+        c.animator.location = c.location; // NOTE: should this be here, or in client?
 
-        if (!c.canfall) { return; } // if the client doesn't fall, it's not really moving.
+        if (!c.canfall) { return; }    // if the client doesn't fall, it's not really moving.
 
-        if (c.falling && c.fallStartTime == null) {
-            c.fallStartTime = new Date();
-            c.fallInitPosition = c.location;
-        }
-        if (c.collision && c.canfall && c.falling) { // fall until collision
-            // are we already falling?
-            const t = (new Date() - c.fallStartTime) / 1000; // current air time(seconds)
-            // const newY = Math.floor(
-            //    (0.5 * this.g * t ** 2 + this.v_0 * t) + c.fallInitPosition.y
-            // );
-            const newV = Math.floor(this.g * t + this.v_0); // expected current velocity
+        if (c.collision && c.canfall) { // fall until collision
+            const newV = Math.floor(this.g + this.velocity.y); // compound velocity + gravity
             const terminalVelocity = 60;
-            //c.location.y = Math.min(newY, c.location.y + teriminalVelocity);
             this.velocity.y = Math.min(newV, terminalVelocity);
         }
         
@@ -60,30 +47,20 @@ class Gravitator {
         c.location.y += this.velocity.y;
         c.updateBB(); // update BB so we have are as accurate as we can be for collision.
 
-        c.wasFalling = c.falling;   // need to remember if we were on the ground before.
-        c.falling = true;           // assume falling until collision
         for (const entity of gameEngine.entities) { // collision checks
+
             if (entity == c || !entity.BB) continue; // entity does not have collision
-
-            const collisionSides = c.BB.collisionSide(entity.BB);
-
             //if (entity.constructor.name != c.constructor.name)
             //console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
             const collides = c.BB.collision(entity.BB);
-            //if (collisionSides.length > 0)
-                //console.log(`${c.constructor.name} hit ${entity.constructor.name} on `, collisionSides);
-            if (collides && c.wasFalling && c.falling) {
+            if (collides) {
                 // bounce back, preventing overlap of boxes:
                 if (c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
                     c.location.y = entity.BB.top - c.BB.height;
-                    this.haveLanded();
-                    
                 }
                 else if (c.lastBB.top >= entity.BB.bottom) { //d client below last tick.
                     c.location.y = entity.BB.bottom;
-                    // TODO: negate vertical velocity here.
-                    this.velocity.y = 0; // start falling as if we'd just walked off ledge?
-                    this.fallStartTime = new Date();
+                    this.velocity.y = 0;
                 }
             }
             if (collides && c.lastBB.right <= entity.BB.left) {// client was left last tick.
@@ -108,11 +85,11 @@ class Gravitator {
     }
     haveLanded() {
         // have landed, clean up data from fall
-        const c = this.client;
-        this.velocity.y = 0;
-        c.falling = false;
-        c.fallStartTime = null;
-        c.fallInitPosition = null;
-        this.v_0 = 0;
+        // const c = this.client;
+        // this.velocity.y = 0;
+        // c.falling = false;
+        // c.fallStartTime = null;
+        // c.fallInitPosition = null;
+        // this.v_0 = 0;
     }
 }
