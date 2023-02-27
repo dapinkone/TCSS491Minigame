@@ -64,7 +64,7 @@ class MainCharacter extends Animator {
             gameEngine.keys['f'] = false;
         }
         if (gameEngine.keys[" "]) { // initiate jump!
-            if (this.mode != "JUMP" && !this.falling)
+            if (this.mode != "JUMP")
                 this.gravitator.jump();
         }
         // not in the air, not walking

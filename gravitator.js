@@ -27,18 +27,24 @@ class Gravitator {
         this.h = 3;            // desired height of "jump"
         this.g = 2 * this.h / (this.t_h ** 2); // acceleration due to gravity.
         this.velocity = { x: 0, y: 0 };
+        this.falling = false; // tracks if we're in the air, can't jump if in the air.
     }
     jump() {
+        if(!this.falling) {
         this.velocity.y =  -2 * this.h / this.t_h;
+        this.falling = true;
+        }
     }
     nextPosition() {
         const c = this.client;
         c.animator.location = c.location; // NOTE: should this be here, or in client?
+        const clockTick = gameEngine.clockTick;
 
         if (!c.canfall) { return; }    // if the client doesn't fall, it's not really moving.
 
         if (c.collision && c.canfall) { // fall until collision
-            const newV = Math.floor(this.g + this.velocity.y); // compound velocity + gravity
+            const newV = Math.floor(this.g * clockTick + this.velocity.y); // compound velocity + gravity
+            console.log(`newV: ${newV}, oldV: ${this.velocity.y}`);
             const terminalVelocity = 60;
             this.velocity.y = Math.min(newV, terminalVelocity);
         }
@@ -57,10 +63,11 @@ class Gravitator {
                 // bounce back, preventing overlap of boxes:
                 if (c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
                     c.location.y = entity.BB.top - c.BB.height;
+                    this.velocity.y = 0;
+                    this.falling = false;
                 }
                 else if (c.lastBB.top >= entity.BB.bottom) { //d client below last tick.
                     c.location.y = entity.BB.bottom;
-                    this.velocity.y = 0;
                 }
             }
             if (collides && c.lastBB.right <= entity.BB.left) {// client was left last tick.
