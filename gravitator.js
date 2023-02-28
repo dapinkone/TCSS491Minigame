@@ -44,7 +44,6 @@ class Gravitator {
 
         if (c.collision && c.canfall) { // fall until collision
             const newV = Math.floor(this.g * clockTick + this.velocity.y); // compound velocity + gravity
-            console.log(`newV: ${newV}, oldV: ${this.velocity.y}`);
             const terminalVelocity = 60;
             this.velocity.y = Math.min(newV, terminalVelocity);
         }
