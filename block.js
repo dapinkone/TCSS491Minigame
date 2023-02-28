@@ -15,12 +15,13 @@ class Block {
     
         this.id = 1000*x + y;
         this.gravitator = new Gravitator(this);
+        //this.updateBB();
         this.updateBB();
-        this.updateBB();
+        this.lastBB = this.BB;
     }
     updateBB() {
         if (this.collision) {
-            this.lastBB = this.BB;
+            //this.lastBB = this.BB;
             this.BB = new BoundingBox({
                 width: Block.blockwidth,
                 height: Block.blockwidth,
@@ -76,6 +77,7 @@ class Mover extends Block {
         }
         this.location.x += this.direction * 2;
         this.animator.location = this.location;
+        this.lastBB = this.BB;
         super.updateBB();
     }
     draw() {

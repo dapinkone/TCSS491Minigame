@@ -30,9 +30,9 @@ class Gravitator {
         this.falling = false; // tracks if we're in the air, can't jump if in the air.
     }
     jump() {
-        if(!this.falling) {
-        this.velocity.y =  -2 * this.h / this.t_h;
-        this.falling = true;
+        if (!this.falling) {
+            this.velocity.y = -2 * this.h / this.t_h;
+            this.falling = true;
         }
     }
     nextPosition() {
@@ -48,28 +48,38 @@ class Gravitator {
             const terminalVelocity = 60;
             this.velocity.y = Math.min(newV, terminalVelocity);
         }
-        
+
         c.location.x += this.velocity.x;
         c.location.y += this.velocity.y;
+        c.lastBB = c.BB;
         c.updateBB(); // update BB so we have are as accurate as we can be for collision.
 
         for (const entity of gameEngine.entities) { // collision checks
 
             if (entity == c || !entity.BB) continue; // entity does not have collision
+            if (entity.falling || entity instanceof MainCharacter) continue; // stationary blocks don't collide.
             //if (entity.constructor.name != c.constructor.name)
             //console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
-            const collides = c.BB.collision(entity.BB);
-            if (collides) {
-                // bounce back, preventing overlap of boxes:
-                if (c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
-                    c.location.y = entity.BB.top - c.BB.height;
-                    this.velocity.y = 0;
-                    this.falling = false;
-                }
-                else if (c.lastBB.top >= entity.BB.bottom) { //d client below last tick.
-                    c.location.y = entity.BB.bottom;
-                }
+            let collides = c.BB.collision(entity.BB);
+            if (collides && c.onCollision !== undefined) {
+                c.onCollision(entity);
             }
+            if (collides && entity.onCollision !== undefined) {
+                entity.onCollision(c);
+            }
+
+            if (collides && c.lastBB.bottom <= entity.BB.top) {// client was above last tick.
+                c.location.y = entity.BB.top - c.BB.height;
+                this.velocity.y = 0;
+                this.falling = false;
+            }
+            else if (collides && c.lastBB.top >= entity.BB.bottom) { //d client below last tick.
+                c.location.y = entity.BB.bottom;
+                this.velocity.y = 0;
+            }
+            c.updateBB();
+            collides = c.BB.collision(entity.BB);
+
             if (collides && c.lastBB.right <= entity.BB.left) {// client was left last tick.
                 c.location.x = entity.BB.left - c.BB.width;
                 this.velocity.x = 0;
@@ -79,12 +89,7 @@ class Gravitator {
                 this.velocity.x = 0;
             }
 
-            if (collides && c.onCollision !== undefined) {
-                c.onCollision(entity);
-            }
-            if (collides && entity.onCollision !== undefined) {
-                entity.onCollision(c);
-            }
+
         }
 
 

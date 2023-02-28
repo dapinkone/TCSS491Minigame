@@ -21,8 +21,9 @@ class MainCharacter extends Animator {
         this.canfall = true;
         this.animator = this;
         this.velocity = { x: 4, y: 0 };
+        //this.updateBB();
         this.updateBB();
-        this.updateBB();
+        this.lastBB = this.BB;
         this.gravitator = new Gravitator(this, this.onLanding);
     }
     onLanding() {
@@ -36,7 +37,7 @@ class MainCharacter extends Animator {
 
     updateBB() {
         if (this.collision) {
-            this.lastBB = this.BB;
+            //this.lastBB = this.BB;
             this.BB = new BoundingBox({
                 width: this.width * 0.6,
                 height: this.height,
