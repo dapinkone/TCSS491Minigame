@@ -13,7 +13,7 @@ class MainCharacter extends Animator {
 
     constructor({ row = 0, mode = "WALK", fps = 5, scale = 1, location = { x: 0, y: 0 } }) {
         //(filename, sx, sy, sWidth, sHeight, sLength=4, fps=5, scale=3) {
-        super("assets/characters.png", 5, (32 * row)+7, 32, 32-10, 4, fps, scale);
+        super("assets/characters.png", 5, (32 * row)+8, 32, 32-8, 4, fps, scale);
         Object.assign(this, { location, mode, row });
         console.log(this, this.location);
 
@@ -25,6 +25,7 @@ class MainCharacter extends Animator {
         this.updateBB();
         this.lastBB = this.BB;
         this.gravitator = new Gravitator(this, this.onLanding);
+        this.HP = this.maxHP = 10;
     }
     onLanding() {
         this.mode = "WALK";
@@ -79,7 +80,19 @@ class MainCharacter extends Animator {
             y: Math.floor(this.location.y - 768/2)};
     }
     draw() {
-        super.draw(gameEngine.ctx);
+        const ctx = gameEngine.ctx;
+        super.draw(ctx);
         this.BB.draw();
+
+        // health bar.
+        const maxHP = this.maxHP;
+        const missingHealth = maxHP - this.HP;
+        const barHeight = maxHP*20;
+        const startY = Math.floor(gameEngine.ctx.canvas.height/2 - barHeight/2);
+        ctx.fillStyle = "grey"; // grey border
+        gameEngine.ctx.fillRect(10, startY, 36, barHeight);
+        ctx.fillStyle = "red";
+        // shift down by missing heatlh, so HP bar fills from bottom.
+        gameEngine.ctx.fillRect(13, startY + 2 + (20*missingHealth), 30, 19*this.HP);
     }
 }
