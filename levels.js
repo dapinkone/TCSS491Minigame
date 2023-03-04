@@ -16,6 +16,7 @@ const buildBackground = (sxCol, syRow) => {
     const ctx = gameEngine.ctx;
     //ctx.save();
     //ctx.globalAlpha = 0.1; // 50% opacity to dim out blocks?
+    
     for (const row of Array(12).keys()) {
         runOfBlocks(sxCol, syRow, row, 0, 16);
     }

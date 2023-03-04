@@ -76,6 +76,7 @@ class Gravitator {
                 c.location.y = entity.BB.bottom;
                 this.velocity.y = 0;
             }
+            //c.lastBB = c.BB;
             c.updateBB();
             collides = c.BB.collision(entity.BB);
 

@@ -1,3 +1,18 @@
+class BG {
+    static blockwidth = 16*4;
+
+    constructor(sourceimg, sx, sy, x, y, width, height) {
+    this.img =  ASSET_MANAGER.getAsset(sourceimg);
+    }
+    draw(ctx) {
+        ctx.save();
+        const pattern = ctx.createPattern(this.img, "repeat")
+        ctx.fillstyle = this.pattern;
+        ctx.fillRect(x, y, width, height);
+
+        ctx.restore();
+    }
+}
 class Block {
     static blockwidth = 16*4;
     constructor(sx, sy, x, y, collision = false, canfall=false, heavy = false) {
@@ -15,7 +30,6 @@ class Block {
     
         this.id = 1000*x + y;
         this.gravitator = new Gravitator(this);
-        //this.updateBB();
         this.updateBB();
         this.lastBB = this.BB;
     }
