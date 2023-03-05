@@ -60,6 +60,8 @@ class Gravitator {
             //if (entity.constructor.name != c.constructor.name)
             //console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);
             let collides = c.BB.collision(entity.BB);
+            if(collides && entity instanceof Phantom) entity.setContact();
+
             if (collides && c.onCollision !== undefined) {
                 c.onCollision(entity);
             }
