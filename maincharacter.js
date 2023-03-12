@@ -83,16 +83,5 @@ class MainCharacter extends Animator {
         const ctx = gameEngine.ctx;
         super.draw(ctx);
         this.BB.draw();
-
-        // health bar.
-        const maxHP = this.maxHP;
-        const missingHealth = maxHP - this.HP;
-        const barHeight = maxHP*20;
-        const startY = Math.floor(gameEngine.ctx.canvas.height/2 - barHeight/2);
-        ctx.fillStyle = "grey"; // grey border
-        gameEngine.ctx.fillRect(10, startY, 36, barHeight);
-        ctx.fillStyle = "red";
-        // shift down by missing heatlh, so HP bar fills from bottom.
-        gameEngine.ctx.fillRect(13, startY + 2 + (20*missingHealth), 30, 19*this.HP);
     }
 }
