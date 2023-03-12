@@ -29,13 +29,14 @@ class HUD {
 
               // health bar.
               const maxHP = gameEngine.mainCharacter.maxHP;
-              const missingHealth = maxHP - gameEngine.mainCharacter.HP;
+              const currHP = gameEngine.mainCharacter.HP;
+              const missingHealth = maxHP - currHP;
               const barHeight = maxHP*20;
               const startY = Math.floor(gameEngine.ctx.canvas.height/2 - barHeight/2);
               ctx.fillStyle = "grey"; // grey border
               gameEngine.ctx.fillRect(10, startY, 36, barHeight);
               ctx.fillStyle = "red";
               // shift down by missing heatlh, so HP bar fills from bottom.
-              gameEngine.ctx.fillRect(13, startY + 2 + (20*missingHealth), 30, 19*this.HP);
+              gameEngine.ctx.fillRect(13, startY + 2 + (20*missingHealth), 30, 19*currHP);
     }
 }
