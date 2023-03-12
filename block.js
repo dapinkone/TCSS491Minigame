@@ -1,18 +1,18 @@
-class BG {
-    static blockwidth = 16*4;
+// class BG {
+//     static blockwidth = 16*4;
 
-    constructor(sourceimg, sx, sy, x, y, width, height) {
-    this.img =  ASSET_MANAGER.getAsset(sourceimg);
-    }
-    draw(ctx) {
-        ctx.save();
-        const pattern = ctx.createPattern(this.img, "repeat")
-        ctx.fillstyle = this.pattern;
-        ctx.fillRect(x, y, width, height);
+//     constructor(sourceimg, sx, sy, x, y, width, height) {
+//     this.img =  ASSET_MANAGER.getAsset(sourceimg);
+//     }
+//     draw(ctx) {
+//         ctx.save();
+//         const pattern = ctx.createPattern(this.img, "repeat")
+//         ctx.fillstyle = this.pattern;
+//         ctx.fillRect(x, y, width, height);
 
-        ctx.restore();
-    }
-}
+//         ctx.restore();
+//     }
+// }
 class Block {
     static blockwidth = 16*4;
     constructor(sx, sy, x, y, runLength, collision = false, heavy = false, horizontal = true) {
@@ -62,7 +62,17 @@ class Block {
         }  
     }
     draw() {
-        this.animator.draw(gameEngine.ctx);
+        if(this.horizontal) {
+            for(const col of Array(this.runLength).keys()) {
+                this.animator.location = {
+                    x: this.location.x + col*this.animator.width,
+                    y: this.location.y
+                };
+                this.animator.draw(gameEngine.ctx);
+            }
+        } else {
+            throw new Error("Vertical draw() of Block class not implemented.");
+        }
         if (this.collision && this.BB) this.BB.draw();
     }
 }

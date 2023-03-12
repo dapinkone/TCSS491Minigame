@@ -1,15 +1,11 @@
 
 const runOfBlocks = (sxCol, syRow, row, col, runLength, horizontal = true, collision = false, heavy = false) => {
     // use a run-length encoding to build the levels a row or column at a time
-    // for (const i of Array(runLength).keys()) { // draw some ground
-    //     const colModifier = horizontal ? i : 0;
-    //     const rowModifier = horizontal ? 0 : i;
         gameEngine.addEntity(new Block(
             sxCol * 16, syRow * 16,
             (col /*+ colModifier*/) * Block.blockwidth,
             (row /*+ rowModifier*/) * Block.blockwidth,
             runLength, collision, heavy, horizontal));
-    //}
 }
 const buildBackground = (sxCol, syRow) => {
     // NOTE: canvas is 1024x768 pixes, 16x12 blocks in dimension
