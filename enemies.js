@@ -26,13 +26,7 @@ class Turret {
 }
 class Projectile {
     constructor(origin, target, friendly=false) {
-        // const deltax = origin.x - target.x;
-        // const deltay = origin.y - target.y;
-        const getDistance = (pt_a, pt_b) => {
-            const a = pt_a.x - pt_b.x;
-            const b = pt_a.y - pt_b.y;
-            return Math.sqrt(a**2 + b**2);
-        }
+
         this.speed = 400;
         this.initTime = gameEngine.timer.gameTime;
         const distToTarget = getDistance(origin, target);
