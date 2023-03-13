@@ -73,7 +73,11 @@ class MainCharacter extends Animator {
             this.gravitator.velocity.y = -10;
         }
         if (gameEngine.click) { // shoot a projectile on click
-            gameEngine.addEntity(new Projectile(this.location, gameEngine.click, true));
+            const tgt = {
+                x: gameEngine.click.x + camera.x,
+                y: gameEngine.click.y + camera.y,
+            }; 
+            gameEngine.addEntity(new Projectile(this.location, tgt, true));
             gameEngine.click = undefined;
         }
         // not in the air, not walking
