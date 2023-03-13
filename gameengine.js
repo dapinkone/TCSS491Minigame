@@ -35,7 +35,6 @@ class GameEngine {
         };
         gameLoop();
     };
-
     startInput() {
         const getXandY = e => ({
             x: e.clientX - this.ctx.canvas.getBoundingClientRect().left,
@@ -74,6 +73,9 @@ class GameEngine {
 
         this.ctx.canvas.addEventListener("keydown", event => this.keys[event.key] = true);
         this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
+        window.addEventListener("keydown", event => {
+            if(event.key == "Escape") this.togglePause();
+        });
     };
 
     addEntity(entity) {
@@ -108,11 +110,30 @@ class GameEngine {
     };
 
     loop() {
-        this.clockTick = this.timer.tick();
-        this.update();
-        this.draw();
+        if(this.running) {
+            this.clockTick = this.timer.tick();
+            this.update();
+            this.draw();
+        }
     };
 
-};
-
 // KV Le was here :)
+
+///////////////////
+/* HTML/CSS menu management code:
+*/
+togglePause() {
+    const menu = document.getElementById("menuScreen");
+    if(menu.style.display == "none") { // pause game.
+        this.ctx.canvas.style.filter = "blur(4px) brightness(50%)";
+        menu.style.display = "block";
+        this.running = false;
+    } else {
+        this.ctx.canvas.style.filter = "";
+        menu.style.display = "none";
+        this.running=true;
+        menu.focus();
+    }
+}
+
+};
