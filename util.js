@@ -57,3 +57,11 @@ window.requestAnimFrame = (() => {
 const getDistance = (p1, p2) => {
     return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
 };
+
+/**
+ * Returns a list of integers which correspond to hex values in a given hex color code.
+ * @param {String} hex 
+ */
+const hexToRGBA = hex => {
+    return [hex.slice(0,2), hex.slice(2,4), hex.slice(4,6), "ff"].map(h => parseInt(h, 16));
+}

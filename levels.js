@@ -77,13 +77,15 @@ function loadLevelFromMap(levelMap) {
     const pixelEq = (a, b) => a && b && a.length == b.length && [0, 1, 2].every(i => a[i] == b[i]);
 
     courseMap.draw();
+    
+
     // some syntax sugar for looking for different blocks trying to separate data from logic.
     const isMover = p => pixelEq(p, [255, 255, 0, 255]); // movers are yellow
     const isFrame = p => pixelEq(p, [0, 0, 0, 255]);     // "frame" is black
     const isPlatform = p => pixelEq(p, [255, 0, 0, 255]); // platforms are red.
     const isVictory = p => pixelEq(p, [0, 255, 0, 255]); // victory block (green)
     const isNOP = p => pixelEq(p, [0,0,0,0] ) || pixelEq(p, [255,255,255,255]); // white/transparent is NOP
-    
+    const isTurret = p => pixelEq(p, hexToRGBA("744700")); // turrets are brown.
     for (let row = 0; row < courseMap.height; row++) {
         let runStart = 0;
         let runType = courseMap.pixels[row][0];
@@ -99,12 +101,14 @@ function loadLevelFromMap(levelMap) {
                     gameEngine.addEntity(new Mover(row, runStart, col - 1));
                 } else if (isFrame(runType)) { // frame (black)
                     runOfBlocks(8, 2, row, runStart, runStop - runStart, true, true);
-                }
-                else if (isPlatform(runType)) { // platform(red)
+                } else if (isPlatform(runType)) { // platform(red)
                     runOfBlocks(0, 1, row, runStart, runStop - runStart, true, true);
                 } else if (isVictory(runType)) { 
                     gameEngine.addEntity(new VictoryBlock(row, col - 1));
-                }  else {
+                }  else if (isTurret(runType)) {
+                    gameEngine.addEntity(new Turret(row, col - 1));
+                    console.log("adding turret ", row, col - 1);
+                } else {
                     //console.log("unknown pixel: ", pixel);
                 }
 
@@ -136,7 +140,8 @@ const levels = {
         ],
 
         victory: [10, 14],*/
-        levelMap: "./assets/level0.png",
+        //levelMap: "./assets/level0.png",
+        levelMap: "./assets/levelY.png",
         entryPoint: { x: 64 * 1, y: 64 * 10 }// entrypoint at bottom
     },
     1: {
