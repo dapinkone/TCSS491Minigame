@@ -13,7 +13,7 @@ class MainCharacter extends Animator {
 
     constructor({ row = 0, mode = "WALK", fps = 5, scale = 1, location = { x: 0, y: 0 } }) {
         //(filename, sx, sy, sWidth, sHeight, sLength=4, fps=5, scale=3) {
-        super("assets/characters.png", 5, (32 * row)+7, 32, 32-10, 4, fps, scale);
+        super("assets/characters.png", 5, (32 * row)+8, 32, 32-8, 4, fps, scale);
         Object.assign(this, { location, mode, row });
         console.log(this, this.location);
 
@@ -25,6 +25,7 @@ class MainCharacter extends Animator {
         this.updateBB();
         this.lastBB = this.BB;
         this.gravitator = new Gravitator(this, this.onLanding);
+        this.HP = this.maxHP = 10;
     }
     onLanding() {
         this.mode = "WALK";
@@ -36,37 +37,47 @@ class MainCharacter extends Animator {
     }
 
     updateBB() {
-        if (this.collision) {
-            //this.lastBB = this.BB;
             this.BB = new BoundingBox({
                 width: this.width * 0.6,
                 height: this.height,
-                location: this.location,
+                location: {x: this.location.x, y:this.location.y},
                 color: "white"
             });
-        }
     }
     update() {
+        const maxSpeed = 8;
         if (gameEngine.keys["d"]) { // moving right
-            this.gravitator.velocity.x = 4;
+            this.gravitator.velocity.x = Math.min(this.gravitator.velocity.x + 0.5, maxSpeed);
             this.mirrored = false;
             this.mode = "WALK";
         }
         else if (gameEngine.keys["a"]) { // moving left
-            this.gravitator.velocity.x = -4;
+            this.gravitator.velocity.x = Math.max(this.gravitator.velocity.x - 0.5, -maxSpeed);
+            //this.gravitator.velocity.x = -4;
             this.mirrored = true;
             this.mode = "WALK";
         }
         if (!(gameEngine.keys["a"] || gameEngine.keys["d"])) {
             this.gravitator.velocity.x = 0;
         }
-        if (gameEngine.keys['f']) {
-            Gravitator.changeDirection();
-            gameEngine.keys['f'] = false;
-        }
+        // if (gameEngine.keys['f']) {
+        //     Gravitator.changeDirection();
+        //     gameEngine.keys['f'] = false;
+        // }
         if (gameEngine.keys[" "]) { // initiate jump!
             if (this.mode != "JUMP")
                 this.gravitator.jump();
+        }
+        if (gameEngine.keys['g']) { // flying for debug
+            this.gravitator.velocity.y = -10;
+        }
+        if (gameEngine.click) { // shoot a projectile on click
+            const tgt = {
+                x: gameEngine.click.x + camera.x,
+                y: gameEngine.click.y + camera.y,
+            }; 
+            gameEngine.addEntity(new Projectile(this.location, tgt, true));
+            gameEngine.click = undefined;
         }
         // not in the air, not walking
         else if (this.mode != "JUMP" && !(gameEngine.keys['a'] | gameEngine.keys['d'])) {
@@ -74,12 +85,18 @@ class MainCharacter extends Animator {
         }
         this.gravitator.nextPosition();
         super.update();
+        
+        const canvas = gameEngine.ctx.canvas;
         camera = {
-            x: Math.floor(this.location.x - 1024/2),
-            y: Math.floor(this.location.y - 768/2)};
+            x: Math.floor(this.location.x - canvas.width/2),
+            y: Math.floor(this.location.y - canvas.height/2)};
+        if(this.HP <= 0) {
+            gameEngine.deathMenu();
+        }
     }
     draw() {
-        super.draw(gameEngine.ctx);
+        const ctx = gameEngine.ctx;
+        super.draw(ctx);
         this.BB.draw();
     }
 }

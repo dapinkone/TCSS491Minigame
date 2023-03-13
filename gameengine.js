@@ -35,7 +35,6 @@ class GameEngine {
         };
         gameLoop();
     };
-
     startInput() {
         const getXandY = e => ({
             x: e.clientX - this.ctx.canvas.getBoundingClientRect().left,
@@ -108,11 +107,52 @@ class GameEngine {
     };
 
     loop() {
-        this.clockTick = this.timer.tick();
-        this.update();
-        this.draw();
+        if(this.running) {
+            this.clockTick = this.timer.tick();
+            this.update();
+            this.draw();
+        }
     };
 
-};
-
 // KV Le was here :)
+
+///////////////////
+/* HTML/CSS menu management code:
+*/
+pause() {
+    console.log("game paused.");
+    const menu = document.getElementById("menuScreen");
+    if(menu.style.display !== "block") { // pause game.
+        this.ctx.canvas.style.filter = "blur(4px)"// brightness(50%)";
+        menu.style.display = "block";
+        this.running = false;
+        menu.focus();
+    }
+}
+unpause() {
+    // if we try to unpause, but game entities have been reset, reset game.
+    if(this.entities.length == 0) {
+        levels.current = 0;
+        loadLevel(levels.current);
+    }
+    const menu = document.getElementById("menuScreen");
+    this.ctx.canvas.style.filter = "";
+    menu.style.display = "none";
+    this.running=true;
+    this.ctx.canvas.focus();
+}
+togglePause() {
+    if(this.running) this.pause();
+    else this.unpause();
+}
+deathMenu() {
+    this.pause();
+    this.clearEntities();
+    levels.current = 0;
+    const lossText = document.getElementById("lossText");
+    lossText.style.display = "block";
+    const playAgain = document.getElementById("playAgain");
+    playAgain.style.display = "block";
+}
+
+};

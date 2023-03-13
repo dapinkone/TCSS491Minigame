@@ -34,7 +34,7 @@ class Animator {
 		if(this.mirrored) { // facing left
 			ctx.scale(-1, 1);
 			destX *= -1;
-			destX -= this.sWidth;
+			destX -= this.sWidth*1.2;
 		}
 		let destY = this.location.y - camera.y;
 		//ctx.drawImage(this.sheet, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
