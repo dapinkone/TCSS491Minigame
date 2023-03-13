@@ -122,7 +122,13 @@ class Mover extends Block {
         super.updateBB();
     }
     draw() {
+        const ctx = gameEngine.ctx;
+        
+        ctx.save();
+        ctx.globalAlpha = 0.3; // want to background to be semi-transparent
         this.background.draw();
+        ctx.restore();
+
         super.draw();
     }
 }
