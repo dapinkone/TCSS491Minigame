@@ -16,11 +16,19 @@ let assetNames = [
 for(const name of assetNames)
 	ASSET_MANAGER.queueDownload("assets/" + name);
 
+resizeCanvas = (event) => {
+	const canvas = document.getElementById("gameWorld");
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+}
+
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
 	const ctx = canvas.getContext("2d");
-	document.getElementById('loc').textContent=document.URL;
 	gameEngine.init(ctx);
+
+	window.onresize = resizeCanvas;
+	resizeCanvas();
 	loadLevel(levels.current);
 	gameEngine.start();
 });
