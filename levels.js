@@ -223,7 +223,7 @@ const levels = {
     // },
     3: {
         background: [0, 0],
-        entryPoint: { x: 64 * 4, y: 64 * 2 },
+        entryPoint: { x: 810.5, y: 2448 },
         levelMap: './assets/level7.png',
     },
     // 4: {
