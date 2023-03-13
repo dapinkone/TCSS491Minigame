@@ -73,9 +73,6 @@ class GameEngine {
 
         this.ctx.canvas.addEventListener("keydown", event => this.keys[event.key] = true);
         this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
-        window.addEventListener("keydown", event => {
-            if(event.key == "Escape") this.togglePause();
-        });
     };
 
     addEntity(entity) {
@@ -122,18 +119,40 @@ class GameEngine {
 ///////////////////
 /* HTML/CSS menu management code:
 */
-togglePause() {
+pause() {
+    console.log("game paused.");
     const menu = document.getElementById("menuScreen");
-    if(menu.style.display == "none") { // pause game.
-        this.ctx.canvas.style.filter = "blur(4px) brightness(50%)";
+    if(menu.style.display !== "block") { // pause game.
+        this.ctx.canvas.style.filter = "blur(4px)"// brightness(50%)";
         menu.style.display = "block";
         this.running = false;
-    } else {
-        this.ctx.canvas.style.filter = "";
-        menu.style.display = "none";
-        this.running=true;
         menu.focus();
     }
+}
+unpause() {
+    // if we try to unpause, but game entities have been reset, reset game.
+    if(this.entities.length == 0) {
+        levels.current = 0;
+        loadLevel(levels.current);
+    }
+    const menu = document.getElementById("menuScreen");
+    this.ctx.canvas.style.filter = "";
+    menu.style.display = "none";
+    this.running=true;
+    this.ctx.canvas.focus();
+}
+togglePause() {
+    if(this.running) this.pause();
+    else this.unpause();
+}
+deathMenu() {
+    this.pause();
+    this.clearEntities();
+    levels.current = 0;
+    const lossText = document.getElementById("lossText");
+    lossText.style.display = "block";
+    const playAgain = document.getElementById("playAgain");
+    playAgain.style.display = "block";
 }
 
 };

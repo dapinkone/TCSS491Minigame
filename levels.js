@@ -223,14 +223,14 @@ const levels = {
         entryPoint: { x: 64 * 4, y: 64 * 2 },
         levelMap: './assets/level7.png',
     },
+    // 4: {
+    //     background: [0, 0],
+    //     entryPoint: {x: 64, y: 64},
+    //     levelMap: './assets/level8.png',
+    // },
     4: {
         background: [0, 0],
-        entryPoint: {x: 64, y: 64},
-        levelMap: './assets/level8.png',
-    },
-    5: {
-        background: [0, 0],
-        entryPoint: {x: 64, y: 100},
+        entryPoint: { x: 8781, y: 14608 },
         levelMap: './assets/levelX.png',
     }
 }

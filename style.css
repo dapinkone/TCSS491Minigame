@@ -28,7 +28,13 @@ canvas {
     font-size: 60pt;
 }
 
-#introText, #pauseText, #victoryText, #victoryTime, #lossText, #playAgain {
+#pauseText, #victoryText, #victoryTime, #lossText, #playAgain {
     font-size: 16pt;
-    margin-left: 16pt;
+    margin-left: 20pt;
+}
+.pauseSubtext {
+    margin-left: 20pt;
+}
+#victoryText, #lossText, #playAgain {
+    display: none;
 }

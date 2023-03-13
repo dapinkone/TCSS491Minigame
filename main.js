@@ -1,4 +1,7 @@
 const gameEngine = new GameEngine();
+window.addEventListener("keydown", event => {
+	if(event.key == "Escape") gameEngine.togglePause();
+});
 let camera = {x: 0, y: 0};
 const ASSET_MANAGER = new AssetManager();
 let assetNames = [
@@ -31,4 +34,5 @@ ASSET_MANAGER.downloadAll(() => {
 	resizeCanvas();
 	loadLevel(levels.current);
 	gameEngine.start();
+	gameEngine.pause(); // so we see the pause screen and controls on start.
 });

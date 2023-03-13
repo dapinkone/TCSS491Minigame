@@ -88,6 +88,9 @@ class MainCharacter extends Animator {
         camera = {
             x: Math.floor(this.location.x - canvas.width/2),
             y: Math.floor(this.location.y - canvas.height/2)};
+        if(this.HP <= 0) {
+            gameEngine.deathMenu();
+        }
     }
     draw() {
         const ctx = gameEngine.ctx;
