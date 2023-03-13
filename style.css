@@ -11,3 +11,24 @@ canvas {
     margin: 0%;
     display: block;
 }
+
+#menuScreen {
+    position: absolute;
+    display: none;
+    z-index: 5;
+    top: 25%;
+    left: 25%;
+    background-color: black;
+    color: yellow;
+    border-radius: 20px;
+    min-width: 50%;
+    opacity: 80%;
+}
+#title {
+    font-size: 60pt;
+}
+
+#introText, #pauseText, #victoryText, #victoryTime, #lossText, #playAgain {
+    font-size: 16pt;
+    margin-left: 16pt;
+}
