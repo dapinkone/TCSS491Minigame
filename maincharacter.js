@@ -72,6 +72,10 @@ class MainCharacter extends Animator {
         if (gameEngine.keys['g']) { // flying for debug
             this.gravitator.velocity.y = -10;
         }
+        if (gameEngine.click) { // shoot a projectile on click
+            gameEngine.addEntity(new Projectile(this.location, gameEngine.click, true));
+            gameEngine.click = undefined;
+        }
         // not in the air, not walking
         else if (this.mode != "JUMP" && !(gameEngine.keys['a'] | gameEngine.keys['d'])) {
             this.mode = "IDLE";
