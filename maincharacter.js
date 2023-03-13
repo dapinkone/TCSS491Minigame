@@ -86,9 +86,11 @@ class MainCharacter extends Animator {
         }
         this.gravitator.nextPosition();
         super.update();
+        
+        const canvas = gameEngine.ctx.canvas;
         camera = {
-            x: Math.floor(this.location.x - 1024/2),
-            y: Math.floor(this.location.y - 768/2)};
+            x: Math.floor(this.location.x - canvas.width/2),
+            y: Math.floor(this.location.y - canvas.height/2)};
     }
     draw() {
         const ctx = gameEngine.ctx;
