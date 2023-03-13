@@ -61,13 +61,16 @@ class MainCharacter extends Animator {
         if (!(gameEngine.keys["a"] || gameEngine.keys["d"])) {
             this.gravitator.velocity.x = 0;
         }
-        if (gameEngine.keys['f']) {
-            Gravitator.changeDirection();
-            gameEngine.keys['f'] = false;
-        }
+        // if (gameEngine.keys['f']) {
+        //     Gravitator.changeDirection();
+        //     gameEngine.keys['f'] = false;
+        // }
         if (gameEngine.keys[" "]) { // initiate jump!
             if (this.mode != "JUMP")
                 this.gravitator.jump();
+        }
+        if (gameEngine.keys['g']) { // flying for debug
+            this.gravitator.velocity.y = -10;
         }
         // not in the air, not walking
         else if (this.mode != "JUMP" && !(gameEngine.keys['a'] | gameEngine.keys['d'])) {
