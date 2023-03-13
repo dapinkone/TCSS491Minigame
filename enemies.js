@@ -39,7 +39,7 @@ class Turret {
 class Projectile {
     constructor(origin, target, friendly=false) {
         this.friendly = friendly;
-        this.speed = 200;
+        this.speed = 300;
         this.initTime = gameEngine.timer.gameTime;
         //this.collision = true;
         const distToTarget = getDistance(origin, target);
@@ -69,7 +69,7 @@ class Projectile {
     }
     
     update() {
-        if(gameEngine.timer.gameTime - this.initTime > 2) {  // upper limit of 5s life span.
+        if(gameEngine.timer.gameTime - this.initTime > 5) {  // upper limit of 5s life span.
             this.removeFromWorld = true;
             return;
         }
