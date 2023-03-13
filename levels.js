@@ -86,6 +86,7 @@ function loadLevelFromMap(levelMap) {
     const isVictory = p => pixelEq(p, [0, 255, 0, 255]); // victory block (green)
     const isNOP = p => pixelEq(p, [0,0,0,0] ) || pixelEq(p, [255,255,255,255]); // white/transparent is NOP
     const isTurret = p => pixelEq(p, hexToRGBA("744700")); // turrets are brown.
+    const isPhantom = p => pixelEq(p, hexToRGBA("AAAAAA")); // Phantom blocks are grey in the map
     for (let row = 0; row < courseMap.height; row++) {
         let runStart = 0;
         let runType = courseMap.pixels[row][0];
@@ -108,6 +109,8 @@ function loadLevelFromMap(levelMap) {
                 }  else if (isTurret(runType)) {
                     gameEngine.addEntity(new Turret(row, col - 1));
                     console.log("adding turret ", row, col - 1);
+                } else if (isPhantom(runType)) {
+                    gameEngine.addEntity(new Phantom(row, col - 1, runStop - runStart));                    
                 } else {
                     //console.log("unknown pixel: ", pixel);
                 }
