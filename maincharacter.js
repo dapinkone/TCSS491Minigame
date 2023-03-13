@@ -45,13 +45,15 @@ class MainCharacter extends Animator {
             });
     }
     update() {
+        const maxSpeed = 8;
         if (gameEngine.keys["d"]) { // moving right
-            this.gravitator.velocity.x = 4;
+            this.gravitator.velocity.x = Math.min(this.gravitator.velocity.x + 0.5, maxSpeed);
             this.mirrored = false;
             this.mode = "WALK";
         }
         else if (gameEngine.keys["a"]) { // moving left
-            this.gravitator.velocity.x = -4;
+            this.gravitator.velocity.x = Math.max(this.gravitator.velocity.x - 0.5, -maxSpeed);
+            //this.gravitator.velocity.x = -4;
             this.mirrored = true;
             this.mode = "WALK";
         }
