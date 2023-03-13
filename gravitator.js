@@ -55,7 +55,7 @@ class Gravitator {
 
         for (const entity of gameEngine.entities) { // collision checks
 
-            if (entity == c || !entity.BB) continue; // entity does not have collision
+            if (entity == c || !entity.BB || !entity.collision) continue; // entity does not have collision
             if (entity.falling || entity instanceof MainCharacter) continue; // stationary blocks don't collide.
             //if (entity.constructor.name != c.constructor.name)
             //console.log(c.constructor.name + " hit " + entity.constructor.name + " from the " + [...hits]);

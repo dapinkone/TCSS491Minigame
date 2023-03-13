@@ -90,6 +90,7 @@ class BoundingBox {
     }
     draw() {
         const ctx = gameEngine.ctx;
+        ctx.lineWidth = 3;
         ctx.strokeStyle = this.color;
         ctx.strokeRect(this.location.x - camera.x, this.location.y - camera.y, this.width, this.height);
         if(this.isMainBox) {
