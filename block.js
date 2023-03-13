@@ -134,27 +134,28 @@ class Mover extends Block {
 }
 class Phantom extends Block {
     constructor(row, col, columns) {
+        super(96, 32, col*Block.blockwidth, row*Block.blockwidth, columns, true, false);
         this.alpha = 1;
         Object.assign(self, {row, col});
-        super(64, 32, col*Block.blockwidth, row*Block.blockwidth, columns, true, false);
         this.contactTime = 0; // time of contact with the player.
+        super.updateBB();
+        this.lastBB = this.BB;
     }
     update() {
         this.timedelta = gameEngine.timer.gameTime - this.contactTime;
-
-        if (this.timedelta < 2) {
+        if(this.timedelta >= 5) {// if now - contactTime > 5 seconds, reset.
+            this.alpha = 1;
+        } else if(this.timedelta > 1) {
+            // this.alpha -= 0.01;
+            this.alpha = 0;
+        } else if (this.timedelta < 1) {
             // no problem. still allowed to stand on it.
-        } else if(this.timedelta > 2) {
-            // > 2 seconds, begin to fade out.
-            this.alpha -= gameEngine.clockTick;
-            
-            if(this.alpha < 0.5) { // if alpha < 0.5, no bounding box.
-                this.BB = undefined;
-                return;
-            }
         }
-        if(this.timedelta > 5) {// if now - contactTime > 5 seconds, reset.
-            super.updateBB();
+
+        if(this.alpha < 0.5) { // if alpha < 0.5, no bounding box.
+            this.BB = undefined;
+            return;
+        } else {
             super.updateBB();
         }
     }
@@ -164,6 +165,7 @@ class Phantom extends Block {
         ctx.globalAlpha = Math.floor(this.alpha);
         super.draw();
         ctx.restore();
+        if(this.BB) this.BB.draw(ctx);
     }
     setContact() {
         if(this.timedelta < 5) {
