@@ -93,6 +93,13 @@ class Mover extends Block {
     // blocks that move horizontally
     constructor(row, startCol, endCol) {
         super(64, 32, startCol*Block.blockwidth, row*Block.blockwidth, 2, true, false);
+        this.background = new Block(
+            112, 32, // sx, sy
+            startCol*Block.blockwidth, // x location
+            row*Block.blockwidth, // y location
+            endCol - startCol + 2, // runLength of bg, accounting for length
+            false // collision
+        );
         Object.assign(this, {row, startCol, endCol});
         this.direction = 1;
     }
@@ -115,6 +122,7 @@ class Mover extends Block {
         super.updateBB();
     }
     draw() {
+        this.background.draw();
         super.draw();
     }
 }
