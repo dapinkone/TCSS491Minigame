@@ -141,7 +141,7 @@ const levels = {
 
         victory: [10, 14],*/
         //levelMap: "./assets/level0.png",
-        levelMap: "./assets/levelY.png",
+        levelMap: "./assets/level0.png",
         entryPoint: { x: 64 * 1, y: 64 * 10 }// entrypoint at bottom
     },
     1: {
