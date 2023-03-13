@@ -37,12 +37,18 @@ class MainCharacter extends Animator {
     }
 
     updateBB() {
-        if (this.collision) {
-            //this.lastBB = this.BB;
+        if(!this.mirrored) {
             this.BB = new BoundingBox({
                 width: this.width * 0.6,
                 height: this.height,
-                location: this.location,
+                location: {x: this.location.x, y:this.location.y},
+                color: "white"
+            });
+        } else {
+            this.BB = new BoundingBox({
+                width: this.width * 0.6,
+                height: this.height,
+                location: {x: this.location.x - 5, y:this.location.y},
                 color: "white"
             });
         }
