@@ -24,7 +24,7 @@ class Gravitator {
         this.onLanding = onLanding; // function to run when we land(change to walk mode or whatever)       
         // gravity-based constants:
         this.t_h = 0.3;       // time to apex of "jump" in seconds.
-        this.h = 3;            // desired height of "jump"
+        this.h = 3.1;            // desired height of "jump"
         this.g = 2 * this.h / (this.t_h ** 2); // acceleration due to gravity.
         this.velocity = { x: 0, y: 0 };
         this.falling = false; // tracks if we're in the air, can't jump if in the air.
